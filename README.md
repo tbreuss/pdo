@@ -21,6 +21,8 @@ This package requires PHP 8.1 or later; it has also been tested on PHP 8.1-8.3. 
 
 ## Quality
 
+[![Testing tebe\pdox](https://github.com/tbreuss/pdox/actions/workflows/tests.yml/badge.svg)](https://github.com/tbreuss/pdox/actions/workflows/tests.yml)
+
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 To run the functional tests at the command line, issue `composer install` and then `composer test` at the package root. (This requires [Composer](https://getcomposer.org/) to be available as `composer`.)
