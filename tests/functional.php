@@ -171,6 +171,22 @@ $result = $db->run($sql)->fetchColumn();
 $expected = false;
 test_identical($result, $expected, 'Fetch column with not existing record');
 
+# Fetch Into
+$fruit = new Fruit();
+$sql = "SELECT * FROM fruits WHERE id = 3";
+$object = $db->run($sql)->fetchInto($fruit);
+$expected = Fruit::class;
+test_instanceof($object, $expected, 'Fetch into instance');
+
+$result = json_encode($object);
+$expected = '{"id":3,"name":"Pear","color":"green","calories":150}';
+test_identical($result, $expected, 'Fetch into');
+
+$sql = "SELECT * FROM fruits WHERE id = 9999";
+$result = $db->run($sql)->fetchInto($fruit);
+$expected = false;
+test_identical($result, $expected, 'Fetch into with not existing record');
+
 # Fetch Numeric
 
 $sql = "SELECT * FROM fruits WHERE id = 3";

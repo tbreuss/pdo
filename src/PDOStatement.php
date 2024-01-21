@@ -4,10 +4,10 @@ namespace tebe\pdox;
 
 class PDOStatement extends \PDOStatement
 {
-    private $db;
+    private $pdo;
 
-    private function __construct(PDO $db) {
-        $this->db = $db;
+    private function __construct(PDO $pdo) {
+        $this->pdo = $pdo;
     }
 
     // Misc fetch methods
@@ -49,12 +49,11 @@ class PDOStatement extends \PDOStatement
         return $this->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function fetchAllObject(string $class = 'stdClass', array $args = [], int $style = 0): array
+    public function fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
     {
-        if (! empty($args)) {
-            return $this->fetchAll(PDO::FETCH_CLASS | $style, $class, $args);
+        if ($constructorArgs) {
+            return $this->fetchAll(PDO::FETCH_CLASS | $style, $class, $constructorArgs);
         }
-
         return $this->fetchAll(PDO::FETCH_CLASS | $style, $class);
     }
 
@@ -78,6 +77,12 @@ class PDOStatement extends \PDOStatement
     public function fetchBoth(): array|false
     {
         return $this->fetch(PDO::FETCH_BOTH);
+    }
+
+    public function fetchInto(object $object): object|false
+    {
+        $this->setFetchMode(PDO::FETCH_INTO, $object);
+        return $this->fetch();
     }
 
     public function fetchNumeric(): array|false
