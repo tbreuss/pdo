@@ -58,11 +58,11 @@ echo json_encode($result);
 ]
 ```
 
-## fetchAssoc
+## fetchAllAssoc
 
 The output is identical to `fetchAll`.
 
-## fetchBoth
+## fetchAllBoth
 
 ```php
 $sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 2";
@@ -95,7 +95,7 @@ echo json_encode($result);
 ]
 ```
 
-## FetchAllColumn
+## fetchAllColumn
 
 ```php
 $sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 3";
@@ -127,7 +127,7 @@ echo json_encode($result);
 ]
 ```
 
-## FetchAllFunction
+## fetchAllFunction
 
 ```php 
 $sql = "SELECT * FROM fruits ORDER BY 1";
