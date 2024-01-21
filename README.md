@@ -31,4 +31,121 @@ This package attempts to comply with [PSR-1](https://www.php-fig.org/psr/psr-1/)
 
 ## Documentation
 
-The documentation will follow shortly, in the meantime please refer to the [tests/](https://github.com/tbreuss/pdox/tree/main/tests) directory.
+The documentation will be completed shortly, in the meantime please refer to the [tests/](https://github.com/tbreuss/pdox/tree/main/tests) directory.
+
+## fetchAll
+
+```php
+$sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 2";
+$result = $db->run($sql)->fetchAll();
+echo json_encode($result);
+```
+
+```json
+[
+    {
+        "id": 1,
+        "name": "Banana",
+        "color": "yellow",
+        "calories": 250
+    },
+    {
+        "id": 2,
+        "name": "Apple",
+        "color": "red",
+        "calories": 150
+    }
+]
+```
+
+## fetchAssoc
+
+The output is identical to `fetchAll`.
+
+## fetchBoth
+
+```php
+$sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 2";
+$result = $db->run($sql)->fetchBoth();
+echo json_encode($result);
+```
+
+```json
+[
+    {
+        "id": 1,
+        "0": 1,
+        "name": "Banana",
+        "1": "Banana",
+        "color": "yellow",
+        "2": "yellow",
+        "calories": 250,
+        "3": 250
+    },
+    {
+        "id": 2,
+        "0": 2,
+        "name": "Apple",
+        "1": "Apple",
+        "color": "red",
+        "2": "red",
+        "calories": 150,
+        "3": 150
+    }
+]
+```
+
+## FetchAllColumn
+
+```php
+$sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 3";
+$result = $db->run($sql)->fetchAllColumn();
+echo json_encode($result);
+```
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+With explicit column:
+
+```php
+$sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 3";
+$result = $db->run($sql)->fetchAllColumn(2);
+echo json_encode($result);
+```
+
+```json
+[
+    "yellow",
+    "red",
+    "green"
+]
+```
+
+## FetchAllFunction
+
+```php 
+$sql = "SELECT * FROM fruits ORDER BY 1";
+$function = function (mixed ...$item): string {
+    return join('-', $item);
+};
+$result = json_encode($db->run($sql)->fetchAllFunction($function));
+```
+
+```json
+[
+    "1-Banana-yellow-250",
+    "2-Apple-red-150",
+    "3-Pear-green-150",
+    "4-Orange-orange-300",
+    "5-Lime-green-333",
+    "6-Lemon-yellow-25",
+    "7-Peach-orange-100",
+    "8-Cherry-red-200"
+]
+```
