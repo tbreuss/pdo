@@ -87,6 +87,13 @@ $result = json_encode($db->run($sql)->fetchAllGroup(PDO::FETCH_COLUMN));
 $expected = '{"1":["Banana"],"2":["Apple"],"3":["Pear"],"4":["Orange"],"5":["Lime"],"6":["Lemon"],"7":["Peach"],"8":["Cherry"]}';
 test_identical($result, $expected, 'Fetch all group with additional column style');
 
+# Fetch All Named
+
+$sql = "SELECT f1.*, f2.color FROM fruits f1 INNER JOIN fruits f2 ON f2.id = f1.id + 1 ORDER BY f1.id";
+$result = json_encode($db->run($sql)->fetchAllNamed());
+$expected = '[{"id":1,"name":"Banana","color":["yellow","red"],"calories":250},{"id":2,"name":"Apple","color":["red","green"],"calories":150},{"id":3,"name":"Pear","color":["green","orange"],"calories":150},{"id":4,"name":"Orange","color":["orange","green"],"calories":300},{"id":5,"name":"Lime","color":["green","yellow"],"calories":333},{"id":6,"name":"Lemon","color":["yellow","orange"],"calories":25},{"id":7,"name":"Peach","color":["orange","red"],"calories":100}]';
+test_identical($result, $expected, 'Fetch all named');
+
 # Fetch All Numeric
 
 $sql = "SELECT * FROM fruits ORDER BY 1";
@@ -121,60 +128,62 @@ test_identical($result, $expected, 'Fetch all unique');
 
 # Fetch
 
-$sql = "SELECT * FROM fruits WHERE id = 3";
-$result = json_encode($db->run($sql)->fetch());
+$sql = "SELECT * FROM fruits WHERE id = ?";
+
+$result = json_encode($db->run($sql, [3])->fetch());
 $expected = '{"id":3,"name":"Pear","color":"green","calories":150}';
 test_identical($result, $expected, 'Fetch');
 
-$sql = "SELECT * FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetch();
+$result = $db->run($sql, [9999])->fetch();
 $expected = false;
 test_identical($result, $expected, 'Fetch with not existing record');
 
 # Fetch Assoc
 
-$sql = "SELECT * FROM fruits WHERE id = 3";
-$result = json_encode($db->run($sql)->fetchAssoc());
+$sql = "SELECT * FROM fruits WHERE id = ?";
+
+$result = json_encode($db->run($sql, [3])->fetchAssoc());
 $expected = '{"id":3,"name":"Pear","color":"green","calories":150}';
 test_identical($result, $expected, 'Fetch assoc');
 
-$sql = "SELECT * FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetchAssoc();
+$result = $db->run($sql, [9999])->fetchAssoc();
 $expected = false;
 test_identical($result, $expected, 'Fetch assoc with not existing record');
 
 # Fetch Both
 
-$sql = "SELECT * FROM fruits WHERE id = 3";
-$result = json_encode($db->run($sql)->fetchBoth());
+$sql = "SELECT * FROM fruits WHERE id = ?";
+
+$result = json_encode($db->run($sql, [3])->fetchBoth());
 $expected = '{"id":3,"0":3,"name":"Pear","1":"Pear","color":"green","2":"green","calories":150,"3":150}';
 test_identical($result, $expected, 'Fetch both');
 
-$sql = "SELECT * FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetchBoth();
+$result = $db->run($sql, [9999])->fetchBoth();
 $expected = false;
 test_identical($result, $expected, 'Fetch both with not existing record');
 
 # Fetch Column
 
-$sql = "SELECT * FROM fruits WHERE id = 3";
-$result = $db->run($sql)->fetchColumn();
+$sql = "SELECT * FROM fruits WHERE id = ?";
+
+$result = $db->run($sql, [3])->fetchColumn();
 $expected = 3;
 test_identical($result, $expected, 'Fetch column');
 
-$result = $db->run($sql)->fetchColumn(3);
+$result = $db->run($sql, [3])->fetchColumn(3);
 $expected = 150;
 test_identical($result, $expected, 'Fetch column with explicit column');
 
-$sql = "SELECT * FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetchColumn();
+$result = $db->run($sql, [9999])->fetchColumn();
 $expected = false;
 test_identical($result, $expected, 'Fetch column with not existing record');
 
 # Fetch Into
+
+$sql = "SELECT * FROM fruits WHERE id = ?";
+
 $fruit = new Fruit();
-$sql = "SELECT * FROM fruits WHERE id = 3";
-$object = $db->run($sql)->fetchInto($fruit);
+$object = $db->run($sql, [3])->fetchInto($fruit);
 $expected = Fruit::class;
 test_instanceof($object, $expected, 'Fetch into instance');
 
@@ -182,27 +191,39 @@ $result = json_encode($object);
 $expected = '{"id":3,"name":"Pear","color":"green","calories":150}';
 test_identical($result, $expected, 'Fetch into');
 
-$sql = "SELECT * FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetchInto($fruit);
+$result = $db->run($sql, [9999])->fetchInto($fruit);
 $expected = false;
 test_identical($result, $expected, 'Fetch into with not existing record');
 
+# Fetch Named
+
+$sql = "SELECT f1.*, f2.color FROM fruits f1 INNER JOIN fruits f2 ON f2.id = f1.id + 1 WHERE f1.id = ?";
+
+$result = json_encode($db->run($sql, [3])->fetchNamed());
+$expected = '{"id":3,"name":"Pear","color":["green","orange"],"calories":150}';
+test_identical($result, $expected, 'Fetch named');
+
+$result = $db->run($sql, [9999])->fetchNamed();
+$expected = false;
+test_identical($result, $expected, 'Fetch named with not existing record');
+
 # Fetch Numeric
 
-$sql = "SELECT * FROM fruits WHERE id = 3";
-$result = json_encode($db->run($sql)->fetchNumeric());
+$sql = "SELECT * FROM fruits WHERE id = ?";
+
+$result = json_encode($db->run($sql, [3])->fetchNumeric());
 $expected = '[3,"Pear","green",150]';
 test_identical($result, $expected, 'Fetch numeric');
 
-$sql = "SELECT * FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetchNumeric();
+$result = $db->run($sql, [9999])->fetchNumeric();
 $expected = false;
 test_identical($result, $expected, 'Fetch numeric with not existing record');
 
 # Fetch Object
 
-$sql = "SELECT * FROM fruits WHERE id = 3";
-$object = $db->run($sql)->fetchObject(Fruit::class);
+$sql = "SELECT * FROM fruits WHERE id = ?";
+
+$object = $db->run($sql, [3])->fetchObject(Fruit::class);
 $expected = Fruit::class;
 test_instanceof($object, $expected, 'Fetch object instance');
 
@@ -210,20 +231,19 @@ $result = json_encode($object);
 $expected = '{"id":3,"name":"Pear","color":"green","calories":150}';
 test_identical($result, $expected, 'Fetch object');
 
-$sql = "SELECT * FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetchObject(Fruit::class);
+$result = $db->run($sql, [9999])->fetchObject(Fruit::class);
 $expected = false;
 test_identical($result, $expected, 'Fetch object with not existing record');
 
 # Fetch Pair
 
-$sql = "SELECT name, color FROM fruits WHERE id = 3";
-$result = json_encode($db->run($sql)->fetchPair());
+$sql = "SELECT name, color FROM fruits WHERE id = ?";
+
+$result = json_encode($db->run($sql, [3])->fetchPair());
 $expected = '{"Pear":"green"}';
 test_identical($result, $expected, 'Fetch pair');
 
-$sql = "SELECT name, color FROM fruits WHERE id = 9999";
-$result = $db->run($sql)->fetchPair();
+$result = $db->run($sql, [9999])->fetchPair();
 $expected = false;
 test_identical($result, $expected, 'Fetch pair with not existing record');
 

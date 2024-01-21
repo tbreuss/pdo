@@ -44,6 +44,11 @@ class PDOStatement extends \PDOStatement
         return $this->fetchAll(PDO::FETCH_GROUP | $style);
     }
 
+    public function fetchAllNamed(): array
+    {
+        return $this->fetchAll(PDO::FETCH_NAMED);
+    }
+
     public function fetchAllNumeric(): array
     {
         return $this->fetchAll(PDO::FETCH_NUM);
@@ -83,6 +88,11 @@ class PDOStatement extends \PDOStatement
     {
         $this->setFetchMode(PDO::FETCH_INTO, $object);
         return $this->fetch();
+    }
+
+    public function fetchNamed(): array|false
+    {
+        return $this->fetch(PDO::FETCH_NAMED);
     }
 
     public function fetchNumeric(): array|false
