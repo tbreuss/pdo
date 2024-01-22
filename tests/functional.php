@@ -5,7 +5,7 @@ namespace tests;
 require_once dirname(__DIR__) . '/src/PDO.php';
 require_once dirname(__DIR__) . '/src/PDOStatement.php';
 
-use tebe\pdox\PDO;
+use tebe\xpdo\PDO;
 
 // ------------------------------------------------------------------------------------------------------------------------
 // Setup

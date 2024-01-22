@@ -1,6 +1,6 @@
 <?php
 
-namespace tebe\pdox;
+namespace tebe\xpdo;
 
 class PDO extends \PDO
 {

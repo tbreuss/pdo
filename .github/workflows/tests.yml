@@ -1,4 +1,4 @@
-name: Testing tebe\pdox
+name: Testing tebe\xpdo
 on: [push, pull_request]
 jobs:
   test:
