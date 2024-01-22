@@ -2,7 +2,7 @@
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 
-use tebe\xpdo\PDO;
+use tebe\PDO;
 
 $db = new PDO('sqlite::memory:');
 

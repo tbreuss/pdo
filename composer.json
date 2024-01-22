@@ -1,5 +1,5 @@
 {
-    "name": "tebe/xpdo",
+    "name": "tebe/pdo",
     "description": "Provides an extension to the native PDO along with additional functionality.",
     "type": "library",
     "keywords": [
@@ -14,7 +14,7 @@
         "sqlserver",
         "sqlsrv"
     ],
-    "homepage": "https://github.com/tebe/xpdo",
+    "homepage": "https://github.com/tebe/pdo",
     "license": "MIT",
     "require": {
         "php": ">=8.1",
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "tebe\\xpdo\\": "src/"
+            "tebe\\": "src/"
         }
     },    
     "scripts": {
