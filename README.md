@@ -14,7 +14,12 @@ Added functionality in `tebe\pdo` over the native PDO includes:
 
 This package is installable and PSR-4 autoloadable via Composer as `tebe/pdo`.
 
-Alternatively, download a release, or clone this repository, then map the `tebe\pdo\` namespace to the package `src/` directory.
+Alternatively, download a release, or clone this repository, then include the classes manually:
+
+```php
+include '{path/to/tebe/pdo}/src/PDO.php';
+include '{path/to/tebe/pdo}/src/PDOStatement.php';
+```
 
 ## Dependencies
 
