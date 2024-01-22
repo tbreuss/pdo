@@ -1,7 +1,7 @@
 # tebe\pdo
 
 Provides an extension to the native PDO along with additional functionality. 
-Because ExtendedPdo is an extension of the native PDO, code already using the native PDO or typehinted to the native PDO can use ExtendedPdo without any changes.
+Because `tebe\pdo` is an extension of the native PDO, code already using the native PDO or typehinted to the native PDO can use `tebe\pdo` without any changes.
 
 Added functionality in `tebe\pdo` over the native PDO includes:
 
