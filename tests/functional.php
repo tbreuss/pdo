@@ -38,32 +38,32 @@ $db->run($sql);
 $sql = "SELECT * FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAll();
 $expected = [["id"=>1,"name"=>"Banana","color"=>"yellow","calories"=>250],["id"=>2,"name"=>"Apple","color"=>"red","calories"=>150],["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150],["id"=>4,"name"=>"Orange","color"=>"orange","calories"=>300],["id"=>5,"name"=>"Lime","color"=>"green","calories"=>333],["id"=>6,"name"=>"Lemon","color"=>"yellow","calories"=>25],["id"=>7,"name"=>"Peach","color"=>"orange","calories"=>100],["id"=>8,"name"=>"Cherry","color"=>"red","calories"=>200]];
-test_identical($result, $expected, 'Fetch all');
+assert_equal($result, $expected, 'Fetch all');
 
 # Fetch All Assoc
 
 $sql = "SELECT * FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllAssoc();
 $expected = [["id"=>1,"name"=>"Banana","color"=>"yellow","calories"=>250],["id"=>2,"name"=>"Apple","color"=>"red","calories"=>150],["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150],["id"=>4,"name"=>"Orange","color"=>"orange","calories"=>300],["id"=>5,"name"=>"Lime","color"=>"green","calories"=>333],["id"=>6,"name"=>"Lemon","color"=>"yellow","calories"=>25],["id"=>7,"name"=>"Peach","color"=>"orange","calories"=>100],["id"=>8,"name"=>"Cherry","color"=>"red","calories"=>200]];
-test_identical($result, $expected, 'Fetch all assoc');
+assert_equal($result, $expected, 'Fetch all assoc');
 
 # Fetch All Both
 
 $sql = "SELECT * FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllBoth();
 $expected = [["id"=>1,"0"=>1,"name"=>"Banana","1"=>"Banana","color"=>"yellow","2"=>"yellow","calories"=>250,"3"=>250],["id"=>2,"0"=>2,"name"=>"Apple","1"=>"Apple","color"=>"red","2"=>"red","calories"=>150,"3"=>150],["id"=>3,"0"=>3,"name"=>"Pear","1"=>"Pear","color"=>"green","2"=>"green","calories"=>150,"3"=>150],["id"=>4,"0"=>4,"name"=>"Orange","1"=>"Orange","color"=>"orange","2"=>"orange","calories"=>300,"3"=>300],["id"=>5,"0"=>5,"name"=>"Lime","1"=>"Lime","color"=>"green","2"=>"green","calories"=>333,"3"=>333],["id"=>6,"0"=>6,"name"=>"Lemon","1"=>"Lemon","color"=>"yellow","2"=>"yellow","calories"=>25,"3"=>25],["id"=>7,"0"=>7,"name"=>"Peach","1"=>"Peach","color"=>"orange","2"=>"orange","calories"=>100,"3"=>100],["id"=>8,"0"=>8,"name"=>"Cherry","1"=>"Cherry","color"=>"red","2"=>"red","calories"=>200,"3"=>200]];
-test_identical($result, $expected, 'Fetch all both');
+assert_equal($result, $expected, 'Fetch all both');
 
 # Fetch All Column
 
 $sql = "SELECT * FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllColumn();
 $expected = [1,2,3,4,5,6,7,8];
-test_identical($result, $expected, 'Fetch all column');
+assert_equal($result, $expected, 'Fetch all column');
 
 $result = $db->run($sql)->fetchAllColumn(2);
 $expected = ["yellow","red","green","orange","green","yellow","orange","red"];
-test_identical($result, $expected, 'Fetch all column with explicit column');
+assert_equal($result, $expected, 'Fetch all column with explicit column');
 
 # Fetch All Function
 
@@ -73,33 +73,33 @@ $function = function (mixed ...$item) {
 };
 $result = $db->run($sql)->fetchAllFunction($function);
 $expected = ["1-Banana-yellow-250","2-Apple-red-150","3-Pear-green-150","4-Orange-orange-300","5-Lime-green-333","6-Lemon-yellow-25","7-Peach-orange-100","8-Cherry-red-200"];
-test_identical($result, $expected, 'Fetch all function');
+assert_equal($result, $expected, 'Fetch all function');
 
 # Fetch All Group
 
 $sql = "SELECT color, id, name FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllGroup();
 $expected = ["green"=>[["id"=>3,"name"=>"Pear"],["id"=>5,"name"=>"Lime"]],"orange"=>[["id"=>4,"name"=>"Orange"],["id"=>7,"name"=>"Peach"]],"red"=>[["id"=>2,"name"=>"Apple"],["id"=>8,"name"=>"Cherry"]],"yellow"=>[["id"=>1,"name"=>"Banana"],["id"=>6,"name"=>"Lemon"]]];
-test_identical($result, $expected, 'Fetch all group');
+assert_equal($result, $expected, 'Fetch all group');
 
 $sql = "SELECT * FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllGroup(PDO::FETCH_COLUMN);
 $expected = ["1"=>["Banana"],"2"=>["Apple"],"3"=>["Pear"],"4"=>["Orange"],"5"=>["Lime"],"6"=>["Lemon"],"7"=>["Peach"],"8"=>["Cherry"]];
-test_identical($result, $expected, 'Fetch all group with additional column style');
+assert_equal($result, $expected, 'Fetch all group with additional column style');
 
 # Fetch All Named
 
 $sql = "SELECT f1.*, f2.color FROM fruits f1 INNER JOIN fruits f2 ON f2.id = f1.id + 1 ORDER BY f1.id";
 $result = $db->run($sql)->fetchAllNamed();
 $expected = [["id"=>1,"name"=>"Banana","color"=>["yellow","red"],"calories"=>250],["id"=>2,"name"=>"Apple","color"=>["red","green"],"calories"=>150],["id"=>3,"name"=>"Pear","color"=>["green","orange"],"calories"=>150],["id"=>4,"name"=>"Orange","color"=>["orange","green"],"calories"=>300],["id"=>5,"name"=>"Lime","color"=>["green","yellow"],"calories"=>333],["id"=>6,"name"=>"Lemon","color"=>["yellow","orange"],"calories"=>25],["id"=>7,"name"=>"Peach","color"=>["orange","red"],"calories"=>100]];
-test_identical($result, $expected, 'Fetch all named');
+assert_equal($result, $expected, 'Fetch all named');
 
 # Fetch All Numeric
 
 $sql = "SELECT * FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllNumeric();
 $expected = [[1,"Banana","yellow",250],[2,"Apple","red",150],[3,"Pear","green",150],[4,"Orange","orange",300],[5,"Lime","green",333],[6,"Lemon","yellow",25],[7,"Peach","orange",100],[8,"Cherry","red",200]];
-test_identical($result, $expected, 'Fetch all numeric');
+assert_equal($result, $expected, 'Fetch all numeric');
 
 # Fetch All Object
 
@@ -107,21 +107,21 @@ $sql = "SELECT color, fruits.* FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllObject(Fruit::class);
 $result = array_map(fn ($item) => (array)$item, $result);
 $expected = [["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150],["id"=>5,"name"=>"Lime","color"=>"green","calories"=>333],["id"=>4,"name"=>"Orange","color"=>"orange","calories"=>300],["id"=>7,"name"=>"Peach","color"=>"orange","calories"=>100],["id"=>2,"name"=>"Apple","color"=>"red","calories"=>150],["id"=>8,"name"=>"Cherry","color"=>"red","calories"=>200],["id"=>1,"name"=>"Banana","color"=>"yellow","calories"=>250],["id"=>6,"name"=>"Lemon","color"=>"yellow","calories"=>25]];
-test_identical($result, $expected, 'Fetch all object');
+assert_equal($result, $expected, 'Fetch all object');
 
 # Fetch All Pairs
 
 $sql = "SELECT name, color FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllPairs();
 $expected = ["Apple"=>"red","Banana"=>"yellow","Cherry"=>"red","Lemon"=>"yellow","Lime"=>"green","Orange"=>"orange","Peach"=>"orange","Pear"=>"green"];
-test_identical($result, $expected, 'Fetch all pairs');
+assert_equal($result, $expected, 'Fetch all pairs');
 
 # Fetch All Unique
 
 $sql = "SELECT id, name, color, calories FROM fruits ORDER BY 1";
 $result = $db->run($sql)->fetchAllUnique();
 $expected = ["1"=>["name"=>"Banana","color"=>"yellow","calories"=>250],"2"=>["name"=>"Apple","color"=>"red","calories"=>150],"3"=>["name"=>"Pear","color"=>"green","calories"=>150],"4"=>["name"=>"Orange","color"=>"orange","calories"=>300],"5"=>["name"=>"Lime","color"=>"green","calories"=>333],"6"=>["name"=>"Lemon","color"=>"yellow","calories"=>25],"7"=>["name"=>"Peach","color"=>"orange","calories"=>100],"8"=>["name"=>"Cherry","color"=>"red","calories"=>200]];
-test_identical($result, $expected, 'Fetch all unique');
+assert_equal($result, $expected, 'Fetch all unique');
 
 // ------------------------------------------------------------------------------------------------------------------------
 // Fetch methods
@@ -133,11 +133,11 @@ $sql = "SELECT * FROM fruits WHERE id = ?";
 
 $result = $db->run($sql, [3])->fetch();
 $expected = ["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150];
-test_identical($result, $expected, 'Fetch');
+assert_equal($result, $expected, 'Fetch');
 
 $result = $db->run($sql, [9999])->fetch();
 $expected = false;
-test_identical($result, $expected, 'Fetch with not existing record');
+assert_equal($result, $expected, 'Fetch with not existing record');
 
 # Fetch Assoc
 
@@ -145,11 +145,11 @@ $sql = "SELECT * FROM fruits WHERE id = ?";
 
 $result = $db->run($sql, [3])->fetchAssoc();
 $expected = ["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150];
-test_identical($result, $expected, 'Fetch assoc');
+assert_equal($result, $expected, 'Fetch assoc');
 
 $result = $db->run($sql, [9999])->fetchAssoc();
 $expected = false;
-test_identical($result, $expected, 'Fetch assoc with not existing record');
+assert_equal($result, $expected, 'Fetch assoc with not existing record');
 
 # Fetch Both
 
@@ -157,11 +157,11 @@ $sql = "SELECT * FROM fruits WHERE id = ?";
 
 $result = $db->run($sql, [3])->fetchBoth();
 $expected = ["id"=>3,"0"=>3,"name"=>"Pear","1"=>"Pear","color"=>"green","2"=>"green","calories"=>150,"3"=>150];
-test_identical($result, $expected, 'Fetch both');
+assert_equal($result, $expected, 'Fetch both');
 
 $result = $db->run($sql, [9999])->fetchBoth();
 $expected = false;
-test_identical($result, $expected, 'Fetch both with not existing record');
+assert_equal($result, $expected, 'Fetch both with not existing record');
 
 # Fetch Column
 
@@ -169,15 +169,15 @@ $sql = "SELECT * FROM fruits WHERE id = ?";
 
 $result = $db->run($sql, [3])->fetchColumn();
 $expected = 3;
-test_identical($result, $expected, 'Fetch column');
+assert_equal($result, $expected, 'Fetch column');
 
 $result = $db->run($sql, [3])->fetchColumn(3);
 $expected = 150;
-test_identical($result, $expected, 'Fetch column with explicit column');
+assert_equal($result, $expected, 'Fetch column with explicit column');
 
 $result = $db->run($sql, [9999])->fetchColumn();
 $expected = false;
-test_identical($result, $expected, 'Fetch column with not existing record');
+assert_equal($result, $expected, 'Fetch column with not existing record');
 
 # Fetch Into
 
@@ -186,14 +186,14 @@ $sql = "SELECT * FROM fruits WHERE id = ?";
 $fruit = new Fruit();
 $result = $db->run($sql, [3])->fetchInto($fruit);
 $expected = Fruit::class;
-test_instanceof($result, $expected, 'Fetch into instance');
+assert_instanceof($result, $expected, 'Fetch into instance');
 
 $expected = ["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150];
-test_identical((array)$result, $expected, 'Fetch into');
+assert_equal((array)$result, $expected, 'Fetch into');
 
 $result = $db->run($sql, [9999])->fetchInto($fruit);
 $expected = false;
-test_identical($result, $expected, 'Fetch into with not existing record');
+assert_equal($result, $expected, 'Fetch into with not existing record');
 
 # Fetch Named
 
@@ -201,11 +201,11 @@ $sql = "SELECT f1.*, f2.color FROM fruits f1 INNER JOIN fruits f2 ON f2.id = f1.
 
 $result = $db->run($sql, [3])->fetchNamed();
 $expected = ["id"=>3,"name"=>"Pear","color"=>["green","orange"],"calories"=>150];
-test_identical($result, $expected, 'Fetch named');
+assert_equal($result, $expected, 'Fetch named');
 
 $result = $db->run($sql, [9999])->fetchNamed();
 $expected = false;
-test_identical($result, $expected, 'Fetch named with not existing record');
+assert_equal($result, $expected, 'Fetch named with not existing record');
 
 # Fetch Numeric
 
@@ -213,11 +213,11 @@ $sql = "SELECT * FROM fruits WHERE id = ?";
 
 $result = $db->run($sql, [3])->fetchNumeric();
 $expected = [3,"Pear","green",150];
-test_identical($result, $expected, 'Fetch numeric');
+assert_equal($result, $expected, 'Fetch numeric');
 
 $result = $db->run($sql, [9999])->fetchNumeric();
 $expected = false;
-test_identical($result, $expected, 'Fetch numeric with not existing record');
+assert_equal($result, $expected, 'Fetch numeric with not existing record');
 
 # Fetch Object
 
@@ -225,14 +225,14 @@ $sql = "SELECT * FROM fruits WHERE id = ?";
 
 $result = $db->run($sql, [3])->fetchObject(Fruit::class);
 $expected = Fruit::class;
-test_instanceof($result, $expected, 'Fetch object instance');
+assert_instanceof($result, $expected, 'Fetch object instance');
 
 $expected = ["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150];
-test_identical((array)$result, $expected, 'Fetch object');
+assert_equal((array)$result, $expected, 'Fetch object');
 
 $result = $db->run($sql, [9999])->fetchObject(Fruit::class);
 $expected = false;
-test_identical($result, $expected, 'Fetch object with not existing record');
+assert_equal($result, $expected, 'Fetch object with not existing record');
 
 # Fetch Pair
 
@@ -240,11 +240,11 @@ $sql = "SELECT name, color FROM fruits WHERE id = ?";
 
 $result = $db->run($sql, [3])->fetchPair();
 $expected = ["Pear" => "green"];
-test_identical($result, $expected, 'Fetch pair');
+assert_equal($result, $expected, 'Fetch pair');
 
 $result = $db->run($sql, [9999])->fetchPair();
 $expected = false;
-test_identical($result, $expected, 'Fetch pair with not existing record');
+assert_equal($result, $expected, 'Fetch pair with not existing record');
 
 // ------------------------------------------------------------------------------------------------------------------------
 // Misc methods
@@ -255,7 +255,7 @@ test_identical($result, $expected, 'Fetch pair with not existing record');
 $sql = "INSERT INTO fruits VALUES (0, 'Kiwi', 'green', 150), (0, 'Plum', 'purple', 250)";
 $result = $db->run($sql)->fetchAffected();
 $expected = 2;
-test_identical($result, $expected, 'Fetch affected');
+assert_equal($result, $expected, 'Fetch affected');
 
 // ------------------------------------------------------------------------------------------------------------------------
 // Classes
@@ -274,18 +274,18 @@ class Fruit {
 
 $numberOfTests = 0;
 
-function test(mixed $assertion, string $message): void
+function _assert(mixed $assertion, string $message): void
 {
     global $numberOfTests;
     assert($assertion, $message);
-    echo $message . ' ✓' . PHP_EOL;
+    echo '✓ ' . $message . PHP_EOL;
     $numberOfTests++;
 }
 
-function test_identical(mixed $result, mixed $expected, string $message) {
-    test($result === $expected, $message);
+function assert_equal(mixed $result, mixed $expected, string $message) {
+    _assert($result === $expected, $message);
 }
 
-function test_instanceof(mixed $result, string $class, string $message) {
-    test($result instanceof $class, $message);
+function assert_instanceof(mixed $result, string $class, string $message) {
+    _assert($result instanceof $class, $message);
 }
