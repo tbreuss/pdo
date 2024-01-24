@@ -6,8 +6,10 @@ Because `tebe\pdo` is an extension of the native PDO, code already using the nat
 Added functionality in `tebe\pdo` over the native PDO includes:
 
 - New run() method. The run() method is for convenience to prepare and execute an SQL statement in one step.
-- New fetch*() methods. The new fetch*() methods provide for commonly-used fetch actions.
-- New fetchAll*() methods. The new fetchAll*() methods provide for commonly-used fetch all actions.
+- Array quoting. The quote() method will accept an array as input, and return a string of comma-separated quoted values.
+- Bind array of values to placeholder. Placeholders that represent array values will be replaced with comma-separated quoted values. This means you can bind an array of values to a placeholder used with an IN (...) condition when using run()
+- Several fetch*() methods. The new fetch*() methods provide for commonly-used fetch actions.
+- Several fetchAll*() methods. The new fetchAll*() methods provide for commonly-used fetch all actions.
 - Exceptions by default. `tebe\pdo` starts in the ERRMODE_EXCEPTION mode for error reporting instead of the ERRMODE_SILENT mode.
 
 ## Installation and Autoloading

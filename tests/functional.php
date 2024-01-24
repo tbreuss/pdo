@@ -3,6 +3,7 @@
 namespace tests;
 
 require_once dirname(__DIR__) . '/src/PDO.php';
+require_once dirname(__DIR__) . '/src/PDOParser.php';
 require_once dirname(__DIR__) . '/src/PDOStatement.php';
 
 use tebe\PDO;
@@ -28,6 +29,24 @@ $sql = "
         (8, 'Cherry', 'red', 200)
 ";
 $db->run($sql);
+
+// ------------------------------------------------------------------------------------------------------------------------
+// Misc methods
+// ------------------------------------------------------------------------------------------------------------------------
+
+# Array binding
+
+$ids = [1, 3, 5, 7];
+
+$sql = "SELECT id FROM fruits WHERE id IN (?) OR id IN (?) ORDER BY 1";
+$result = $db->run($sql, [$ids, $ids])->fetchAllColumn();
+$expected = $ids;
+assert_equal($result, $expected, 'Bind array of values to positional parameters');
+
+$sql = "SELECT id FROM fruits WHERE id IN (:ids1) OR id IN (:ids2) ORDER BY 1";
+$result = $db->run($sql, ['ids1' => $ids, 'ids2' => $ids])->fetchAllColumn();
+$expected = $ids;
+assert_equal($result, $expected, 'Bind array of values to named parameters');
 
 // ------------------------------------------------------------------------------------------------------------------------
 // Fetch All methods

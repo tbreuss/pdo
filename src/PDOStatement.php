@@ -4,7 +4,7 @@ namespace tebe;
 
 class PDOStatement extends \PDOStatement
 {
-    private $pdo;
+    protected $pdo;
 
     private function __construct(PDO $pdo) {
         $this->pdo = $pdo;
