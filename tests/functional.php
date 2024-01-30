@@ -4,6 +4,7 @@ namespace tests;
 
 require_once dirname(__DIR__) . '/src/PDO.php';
 require_once dirname(__DIR__) . '/src/PDOParser.php';
+require_once dirname(__DIR__) . '/src/PDOResult.php';
 require_once dirname(__DIR__) . '/src/PDOStatement.php';
 
 use tebe\PDO;
@@ -102,7 +103,7 @@ $expected = ["green"=>[["id"=>3,"name"=>"Pear"],["id"=>5,"name"=>"Lime"]],"orang
 assert_equal($result, $expected, 'Fetch all group');
 
 $sql = "SELECT * FROM fruits ORDER BY 1";
-$result = $db->run($sql)->fetchAllGroup(PDO::FETCH_COLUMN);
+$result = $db->run($sql)->fetchAllGroup(\PDO::FETCH_COLUMN);
 $expected = ["1"=>["Banana"],"2"=>["Apple"],"3"=>["Pear"],"4"=>["Orange"],"5"=>["Lime"],"6"=>["Lemon"],"7"=>["Peach"],"8"=>["Cherry"]];
 assert_equal($result, $expected, 'Fetch all group with additional column style');
 
