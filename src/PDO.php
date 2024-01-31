@@ -150,10 +150,10 @@ class PDO
         return $stmt ? new PDOStatement($stmt) : false;
     }
 
-    public function query(string $query, mixed ...$fetchModeArgs): PDOStatement|false
+    public function query(string $query, mixed ...$fetchModeArgs): PDOResult|false
     {
         $stmt = $this->pdo->query($query, ...$fetchModeArgs);
-        return $stmt ? new PDOStatement($stmt) : false;
+        return $stmt ? new PDOResult($stmt) : false;
     }
 
     public function quote(array|string|int|float|null $value, int $type = self::PARAM_STR): string|false
