@@ -2,7 +2,7 @@
 
 namespace tebe;
 
-class PDOResult
+class PDOResult implements \IteratorAggregate
 {
     protected \PDOStatement $stmt;
 
