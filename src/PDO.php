@@ -2,6 +2,18 @@
 
 namespace tebe;
 
+/**
+ * @method bool beginTransaction() Initiates a transaction
+ * @method bool commit() Commits a transaction
+ * @method ?string errorCode() Fetch the SQLSTATE associated with the last operation on the database handle
+ * @method array errorInfo() Fetch extended error information associated with the last operation on the database handle
+ * @method int|false exec(string $statement) Execute an SQL statement and return the number of affected rows
+ * @method mixed getAttribute(int $attribute) Retrieve a database connection attribute
+ * @method bool inTransaction() Checks if inside a transaction
+ * @method string|false lastInsertId(?string $name = null) Returns the ID of the last inserted row or sequence value
+ * @method bool rollBack() Rolls back a transaction
+ * @method bool setAttribute(int $attribute, mixed $value) Set an attribute
+ */
 class PDO
 {
     public const int PARAM_NULL = \PDO::PARAM_NULL;
@@ -85,6 +97,9 @@ class PDO
     protected \PDO $pdo;
     protected PDOParser $parser;
 
+    /**
+     * Creates a PDO instance representing a connection to a database
+     */
     public function __construct(string $dsn, ?string $username = NULL, ?string $password = NULL, array $options = [])
     {
         $options = array_replace(
@@ -99,63 +114,65 @@ class PDO
         $this->parser = new PDOParser($this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
     }
 
-    public function beginTransaction(): bool
+    /**
+     * Calls the method of the original PDO object
+     */
+    public function __call(string $name, array $arguments): mixed
     {
-        return $this->pdo->beginTransaction();
+        $methods = [
+            'beginTransaction',
+            'commit',
+            'errorCode',
+            'errorInfo',
+            'exec',
+            'getAttribute',
+            'inTransaction',
+            'lastInsertId',
+            'rollBack',
+            'setAttribute',
+        ];
+
+        if (in_array($name, $methods)) {
+            return call_user_func_array([$this->pdo, $name], $arguments);
+        }
+
+        throw new \BadMethodCallException("Method $name doesn't exist");
     }
 
-    public function commit(): bool
-    {
-        return $this->pdo->commit();
-    }
-
-    public function errorCode(): ?string
-    {
-        return $this->pdo->errorCode();
-    }
-
-    public function errorInfo(): array
-    {
-        return $this->pdo->errorInfo();
-    }
-    
-    public function exec(string $statement): int|false
-    {
-        return $this->pdo->exec($statement);
-    }
-
-    public function getAttribute(int $attribute): mixed
-    {
-        return $this->pdo->getAttribute($attribute);
-    }
-
+    /**
+     * Return an array of available PDO drivers
+     */
     public static function getAvailableDrivers(): array
     {
         return \PDO::getAvailableDrivers();
     }
 
-    public function inTransaction(): bool
-    {
-        return $this->pdo->inTransaction();
-    }
-
-    public function lastInsertId(?string $name = null): string|false
-    {
-        return $this->pdo->lastInsertId($name);
-    }
-
+    /**
+     * Prepares a statement for execution and returns a statement object
+     */
     public function prepare(string $query, array $options = []): PDOStatement|false
     {
         $stmt = $this->pdo->prepare($query, $options);
         return $stmt ? new PDOStatement($stmt) : false;
     }
 
+    /**
+     * Prepares and executes an SQL statement without placeholders
+     * 
+     * This differs from `PDO::query` in that it will return a PDOResult object.
+     */
     public function query(string $query, mixed ...$fetchModeArgs): PDOResult|false
     {
         $stmt = $this->pdo->query($query, ...$fetchModeArgs);
         return $stmt ? new PDOResult($stmt) : false;
     }
 
+    /**
+     * Quotes a string for use in a query
+     * 
+     * This differs from `PDO::quote()` in that it will convert an array into 
+     * a string of comma-separated quoted values.
+     */
     public function quote(array|string|int|float|null $value, int $type = self::PARAM_STR): string|false
     {
         $value = $value ?? '';
@@ -171,10 +188,15 @@ class PDO
         return implode(', ', $value);
     }
 
-    public function run(string $sql, ?array $args = null): PDOResult
+    /**
+     * Runs a query with bound values and returns the resulting PDOResult; 
+     * array values will be processed by the parser instance and placeholders are replaced.
+     */
+    public function run(string $sql, ?array $args = null): PDOResult|false
     {
         if ($args === null) {
-            return new PDOResult($this->pdo->query($sql));
+            $stmt = $this->pdo->query($sql);
+            return $stmt ? new PDOResult($stmt) : false;
         }
         
         $isMultiArray = false;
@@ -191,18 +213,8 @@ class PDO
         }
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($args);
+        $status = $stmt->execute($args);
 
-        return new PDOResult($stmt);
-    }
-
-    public function rollBack(): bool
-    {
-        return $this->pdo->rollBack();
-    }
-
-    public function setAttribute(int $attribute, mixed $value): bool
-    {
-        return $this->pdo->setAttribute($attribute, $value);
+        return $status ? new PDOResult($stmt) : false;
     }
 }

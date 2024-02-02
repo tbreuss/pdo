@@ -2,6 +2,26 @@
 
 namespace tebe;
 
+/**
+ * @method bool closeCursor() Closes the cursor, enabling the statement to be executed again
+ * @method int columnCount() Returns the number of columns in the result set
+ * @method ?bool debugDumpParams() Dump an SQL prepared command
+ * @method ?string errorCode() Fetch the SQLSTATE associated with the last operation on the statement handle
+ * @method array errorInfo() Fetch extended error information associated with the last operation on the statement handle
+ * @method mixed fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0) Fetches the next row from a result set
+ * @method array fetchAll(int $mode = PDO::FETCH_DEFAULT) Fetches the remaining rows from a result set
+ * @method array fetchAll(int $mode = PDO::FETCH_COLUMN, int $column) Fetches the remaining rows from a result set
+ * @method array fetchAll(int $mode = PDO::FETCH_CLASS, string $class, ?array $constructorArgs) Fetches the remaining rows from a result set
+ * @method array fetchAll(int $mode = PDO::FETCH_FUNC, callable $callback) Fetches the remaining rows from a result set
+ * @method array fetchColumn(int $column = 0) Returns a single column from the next row of a result set
+ * @method object|false fetchObject(?string $class = "stdClass", array $constructorArgs = []) Fetches the next row and returns it as an object
+ * @method false nextRowset() Advances to the next rowset in a multi-rowset statement handle
+ * @method int rowCount() Returns the number of rows affected by the last SQL statement
+ * @method bool setFetchMode(int $mode) Set the default fetch mode for this statement
+ * @method bool setFetchMode(int $mode = PDO::FETCH_COLUMN, int $colno) Set the default fetch mode for this statement
+ * @method bool setFetchMode(int $mode = PDO::FETCH_CLASS, string $class, ?array $constructorArgs = null) Set the default fetch mode for this statement
+ * @method bool setFetchMode(int $mode = PDO::FETCH_INTO, object $object) Set the default fetch mode for this statement
+ */
 class PDOResult implements \IteratorAggregate
 {
     protected \PDOStatement $stmt;
@@ -9,38 +29,33 @@ class PDOResult implements \IteratorAggregate
     public function __construct(\PDOStatement $stmt) {
         $this->stmt = $stmt;
     }
-
-    public function closeCursor(): bool
+    
+    public function __call(string $name, array $arguments): mixed
     {
-        return $this->stmt->closeCursor();
-    }
+        $methods = [
+            'closeCursor',
+            'columnCount',
+            'debugDumpParams',
+            'errorCode',
+            'errorInfo',
+            'fetch',
+            'fetchAll',
+            'fetchColumn',
+            'fetchObject',
+            'getColumnMeta',
+            'nextRowset',
+            'rowCount',
+            'setFetchMode'
+        ];
 
-    public function columnCount(): int
-    {
-        return $this->stmt->columnCount();
-    }
+        if (in_array($name, $methods)) {
+            return call_user_func_array([$this->stmt, $name], $arguments);
+        }
 
-    public function debugDumpParams(): ?bool
-    {
-        return $this->stmt->debugDumpParams();
-    }
-
-    public function errorCode(): ?string
-    {
-        return $this->stmt->errorCode();
-    }
-
-    public function errorInfo(): array
-    {
-        return $this->stmt->errorInfo();
+        throw new \BadMethodCallException("Method $name doesn't exist");
     }
 
     // Fetch methods
-
-    public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0): mixed
-    {
-        return $this->stmt->fetch($mode, $cursorOrientation, $cursorOffset);
-    }
 
     public function fetchAffected(): int
     {
@@ -55,11 +70,6 @@ class PDOResult implements \IteratorAggregate
     public function fetchBoth(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_BOTH);
-    }
-
-    public function fetchColumn(int $column = 0): mixed
-    {
-        return $this->stmt->fetchColumn($column);
     }
 
     public function fetchInto(object $object): object|false
@@ -78,22 +88,12 @@ class PDOResult implements \IteratorAggregate
         return $this->stmt->fetch(PDO::FETCH_NUM);
     }
 
-    public function fetchObject(?string $class = "stdClass", array $constructorArgs = []): object|false
-    {
-        return $this->stmt->fetchObject($class, $constructorArgs);
-    }
-
     public function fetchPair(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_KEY_PAIR);
     }
 
     // Fetch all methods
-
-    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, mixed ...$args): array
-    {
-        return $this->stmt->fetchAll($mode, ...$args);
-    }
 
     public function fetchAllAssoc(): array
     {
@@ -148,28 +148,8 @@ class PDOResult implements \IteratorAggregate
         return $this->stmt->fetchAll(PDO::FETCH_UNIQUE | $style);
     }
 
-    public function getColumnMeta(int $column): array|false
-    {
-        return $this->stmt->getColumnMeta($column);
-    }
-
     public function getIterator(): \Iterator
     {
         return $this->stmt->getIterator();
-    }
-
-    public function nextRowset(): bool
-    {
-        return $this->stmt->nextRowset();
-    }
-
-    public function rowCount(): int
-    {
-        return $this->stmt->rowCount();
-    }
-
-    public function setFetchMode(int $mode, mixed ...$args): bool
-    {
-        return $this->stmt->setFetchMode($mode, ...$args);
     }
 }
