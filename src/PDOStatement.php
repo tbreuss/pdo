@@ -14,6 +14,11 @@ namespace tebe;
 class PDOStatement
 {
     protected \PDOStatement $stmt;
+    
+    /**
+     * Used query string
+     */
+    public string $queryString;
 
     /**
      * Creates a PDOStatement instance representing a query statement and wraps the original PDOStatement
@@ -21,6 +26,7 @@ class PDOStatement
     public function __construct(\PDOStatement $stmt)
     {
         $this->stmt = $stmt;
+        $this->queryString = $stmt->queryString;
     }
 
     /**
@@ -45,6 +51,11 @@ class PDOStatement
         throw new \BadMethodCallException("Method $name doesn't exist");
     }
 
+    /**
+     * Executes a prepared statement
+     * 
+     * This differs from `PDOStatement::execute` in that it will return a PDOResult object.
+     */
     public function execute(?array $params = null): PDOResult|false
     {
         $status = $this->stmt->execute($params);
