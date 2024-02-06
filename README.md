@@ -41,7 +41,184 @@ This package attempts to comply with [PSR-1](https://www.php-fig.org/psr/psr-1/)
 
 The documentation will be completed shortly, in the meantime please refer to the [tests/](https://github.com/tbreuss/pdo/tree/main/tests) directory.
 
-## fetchAll
+## tebe\PDO
+
+### beginTransaction
+
+Initiates a transaction.  
+
+```php
+public PDO::beginTransaction(): bool
+```
+
+See [php.net/pdo.beginTransaction](https://php.net/pdo.beginTransaction).
+
+### commit
+
+Commits a transaction.
+
+```php
+public PDO::commit(): bool
+```
+
+See [php.net/pdo.commit](https://php.net/pdo.commit).
+
+### __construct
+
+Creates a PDO instance to represent a connection to the requested database.
+
+```php
+public PDO::__construct(
+    string $dsn,
+    ?string $username = null,
+    ?string $password = null,
+    ?array $options = null
+)
+```
+
+See [php.net/pdo.__construct](https://php.net/pdo.__construct).
+
+### errorCode
+
+Fetch the SQLSTATE associated with the last operation on the database handle.  
+
+```php
+public PDO::errorCode(): ?string
+```
+
+See [php.net/pdo.errorCode](https://php.net/pdo.errorCode).
+
+### errorInfo
+
+Fetch extended error information associated with the last operation on the database handle.  
+
+```php
+public PDO::errorInfo(): array
+```
+
+See [php.net/pdo.errorInfo](https://php.net/pdo.errorInfo).
+
+### exec
+
+Execute an SQL statement and return the number of affected rows.  
+
+```php
+public PDO::exec(string $statement): int|false
+```
+
+See [php.net/pdo.exec](https://php.net/pdo.exec).
+
+### getAttribute
+
+Retrieve a database connection attribute.  
+
+```php
+public PDO::getAttribute(int $attribute): mixed
+```
+
+See [php.net/pdo.getAttribute](https://php.net/pdo.getAttribute).
+
+### getAvailableDrivers
+
+Return an array of available PDO drivers.
+
+```php
+public static PDO::getAvailableDrivers(): array
+```
+
+See [php.net/pdo.getAvailableDrivers](https://php.net/pdo.getAvailableDrivers).
+
+### getPdo
+
+Return the underlying PDO instance.
+
+```php
+public PDO::getPdo(): \PDO
+```
+
+See [php.net/pdo](https://php.net/pdo).
+
+### inTransaction
+
+Checks if inside a transaction.  
+
+```php
+public PDO::inTransaction(): bool
+```
+
+See [php.net/pdo.inTransaction](https://php.net/pdo.inTransaction).
+
+### lastInsertId
+
+Returns the ID of the last inserted row or sequence value.  
+
+```php
+public PDO::lastInsertId(?string $name = null):string|false 
+```
+
+See [php.net/pdo.lastInsertId](https://php.net/pdo.lastInsertId).
+
+### prepare
+
+Prepares a statement for execution and returns a statement object.
+This differs from `PDO::prepare` in that it will return a tebe\PDOStatement object.
+
+```php
+public PDO::prepare(string $query, array $options = []): PDOStatement|false
+````
+
+See [php.net/pdo.prepare](https://php.net/pdo.prepare).
+
+### query
+
+Prepares and executes an SQL statement without placeholders.
+This differs from `PDO::query` in that it will return a tebe\DOResult object.
+
+```php
+public PDO::query(string $query, mixed ...$fetchModeArgs): PDOResult|false
+```
+
+See [php.net/pdo.query](https://php.net/pdo.query).
+
+### quote
+
+Quotes a string for use in a query.
+
+This differs from `PDO::quote()` in that it will convert an array into a string of comma-separated quoted values.
+
+```php
+public PDO::quote(array|string|int|float|null $value, int $type = self::PARAM_STR): string|false
+```
+
+See [php.net/pdo.quote](https://php.net/pdo.quote).
+
+### rollBack
+
+Rolls back a transaction.  
+
+```php
+public PDO::rollBack():bool
+```
+
+See [php.net/pdo.rollBack](https://php.net/pdo.rollBack).
+
+### setAttribute
+
+Set an attribute.  
+
+```php
+public PDO::setAttribute(int $attribute, mixed $value):bool
+```
+
+See [php.net/pdo.setAttribute](https://php.net/pdo.setAttribute).
+
+## PDOStatement
+
+To be done.
+
+## PDOResult
+
+### fetchAll
 
 ```php
 $sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 2";
@@ -66,11 +243,11 @@ echo json_encode($result);
 ]
 ```
 
-## fetchAllAssoc
+### fetchAllAssoc
 
 The output is identical to `fetchAll`.
 
-## fetchAllBoth
+### fetchAllBoth
 
 ```php
 $sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 2";
@@ -103,7 +280,7 @@ echo json_encode($result);
 ]
 ```
 
-## fetchAllColumn
+### fetchAllColumn
 
 ```php
 $sql = "SELECT * FROM fruits ORDER BY 1 LIMIT 3";
@@ -135,7 +312,7 @@ echo json_encode($result);
 ]
 ```
 
-## fetchAllFunction
+### fetchAllFunction
 
 ```php 
 $sql = "SELECT * FROM fruits ORDER BY 1";

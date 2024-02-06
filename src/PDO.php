@@ -157,6 +157,8 @@ class PDO
 
     /**
      * Prepares a statement for execution and returns a statement object
+     * 
+     * This differs from `PDO::prepare` in that it will return a tebe\PDOStatement object.
      */
     public function prepare(string $query, array $options = []): PDOStatement|false
     {
@@ -167,7 +169,7 @@ class PDO
     /**
      * Prepares and executes an SQL statement without placeholders
      * 
-     * This differs from `PDO::query` in that it will return a PDOResult object.
+     * This differs from `PDO::query` in that it will return a tebe\DOResult object.
      */
     public function query(string $query, mixed ...$fetchModeArgs): PDOResult|false
     {
