@@ -169,7 +169,7 @@ class PDO
     /**
      * Prepares and executes an SQL statement without placeholders
      * 
-     * This differs from `PDO::query` in that it will return a tebe\DOResult object.
+     * This differs from `PDO::query` in that it will return a tebe\PDOResult object.
      */
     public function query(string $query, mixed ...$fetchModeArgs): PDOResult|false
     {

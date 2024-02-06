@@ -41,6 +41,27 @@ This package attempts to comply with [PSR-1](https://www.php-fig.org/psr/psr-1/)
 
 The documentation will be completed shortly, in the meantime please refer to the [tests/](https://github.com/tbreuss/pdo/tree/main/tests) directory.
 
+- tebe\PDO
+  - [beginTransaction](#begintransaction)
+  - [commit](#commit)
+  - [__construct](#__construct)
+  - [errorCode](#errorcode)
+  - [errorInfo](#errorinfo)
+  - [exec](#exec)
+  - [getAttribute](#getattribute)
+  - [getAvailableDrivers](#getavailabledrivers)
+  - [getPdo](#getpdo)
+  - [inTransaction](#intransaction)
+  - [lastInsertId](#lastinsertid)
+  - [prepare](#prepare)
+  - [query](#query)
+  - [quote](#quote)
+  - [rollBack](#rollback)
+  - [setAttribute](#setattribute)
+- tebe\PDOStatement
+- tebe\PDOResult
+- tebe\PDOParser
+
 ## tebe\PDO
 
 ### beginTransaction
