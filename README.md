@@ -209,7 +209,7 @@ Quotes a string for use in a query.
 This differs from `PDO::quote()` in that it will convert an array into a string of comma-separated quoted values.
 
 ```php
-public PDO::quote(array|string|int|float|null $value, int $type = self::PARAM_STR): string|false
+public PDO::quote(array|string|int|float|null $value, int $type = PDO::PARAM_STR): string|false
 ```
 
 See [php.net/pdo.quote](https://php.net/pdo.quote).
