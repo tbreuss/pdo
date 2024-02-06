@@ -2,106 +2,63 @@
 
 namespace tebe;
 
-class PDOStatement extends \PDOStatement
+/**
+ * @method bool bindColumn(string|int $column, mixed &$var, int $type = PDO::PARAM_STR, int $maxLength = 0, mixed $driverOptions = null) Bind a column to a PHP variable
+ * @method bool bindParam(string|int $param, mixed &$var, int $type = PDO::PARAM_STR, int $maxLength = 0, mixed $driverOptions = null) Binds a parameter to the specified variable name
+ * @method bool bindValue(string|int $param, mixed $value, int $type = PDO::PARAM_STR) Binds a value to a parameter
+ * @method ?string errorCode() Fetch the SQLSTATE associated with the last operation on the statement handle
+ * @method array errorInfo() Fetch extended error information associated with the last operation on the statement handle
+ * @method mixed getAttribute(int $name) Retrieve a statement attribute
+ * @method bool setAttribute(int $attribute, mixed $value) Set a statement attribute
+ */
+class PDOStatement
 {
-    protected $pdo;
-
-    private function __construct(PDO $pdo) {
-        $this->pdo = $pdo;
-    }
-
-    // Misc fetch methods
-
-    public function fetchAffected(): int
-    {
-        return $this->rowCount();
-    }
-
-    // Fetch all methods
-
-    public function fetchAllAssoc(): array
-    {
-        return $this->fetchAll(PDO::FETCH_ASSOC);
-    }
+    protected \PDOStatement $stmt;
     
-    public function fetchAllBoth(): array
+    /**
+     * Used query string
+     */
+    public string $queryString;
+
+    /**
+     * Creates a PDOStatement instance representing a query statement and wraps the original PDOStatement
+     */
+    public function __construct(\PDOStatement $stmt)
     {
-        return $this->fetchAll(PDO::FETCH_BOTH);
+        $this->stmt = $stmt;
+        $this->queryString = $stmt->queryString;
     }
 
-    public function fetchAllColumn(int $column = 0): array
+    /**
+     * Calls the method of the original PDOStatement object
+     */
+    public function __call(string $name, array $arguments): mixed
     {
-        return $this->fetchAll(PDO::FETCH_COLUMN, $column);
-    }
+        $methods = [
+            'bindColumn', 
+            'bindParam', 
+            'bindValue', 
+            'errorCode', 
+            'errorInfo', 
+            'getAttribute', 
+            'setAttribute'
+        ];
 
-    public function fetchAllFunction(callable $callable): array
-    {
-        return $this->fetchAll(PDO::FETCH_FUNC, $callable);
-    }
-
-    public function fetchAllGroup(int $style = 0): array
-    {
-        return $this->fetchAll(PDO::FETCH_GROUP | $style);
-    }
-
-    public function fetchAllNamed(): array
-    {
-        return $this->fetchAll(PDO::FETCH_NAMED);
-    }
-
-    public function fetchAllNumeric(): array
-    {
-        return $this->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
-    {
-        if ($constructorArgs) {
-            return $this->fetchAll(PDO::FETCH_CLASS | $style, $class, $constructorArgs);
+        if (in_array($name, $methods)) {
+            return call_user_func_array([$this->stmt, $name], $arguments);
         }
-        return $this->fetchAll(PDO::FETCH_CLASS | $style, $class);
+
+        throw new \BadMethodCallException("Method $name doesn't exist");
     }
 
-    public function fetchAllPairs(): array
+    /**
+     * Executes a prepared statement
+     * 
+     * This differs from `PDOStatement::execute` in that it will return a PDOResult object.
+     */
+    public function execute(?array $params = null): PDOResult|false
     {
-        return $this->fetchAll(PDO::FETCH_KEY_PAIR);
-    }
-
-    public function fetchAllUnique(int $style = 0): array
-    {
-        return $this->fetchAll(PDO::FETCH_UNIQUE | $style);
-    }
-
-    // Fetch methods
-
-    public function fetchAssoc(): array|false
-    {
-        return $this->fetch(PDO::FETCH_ASSOC);
-    }
-    
-    public function fetchBoth(): array|false
-    {
-        return $this->fetch(PDO::FETCH_BOTH);
-    }
-
-    public function fetchInto(object $object): object|false
-    {
-        $this->setFetchMode(PDO::FETCH_INTO, $object);
-        return $this->fetch();
-    }
-
-    public function fetchNamed(): array|false
-    {
-        return $this->fetch(PDO::FETCH_NAMED);
-    }
-
-    public function fetchNumeric(): array|false
-    {
-        return $this->fetch(PDO::FETCH_NUM);
-    }
-
-    public function fetchPair(): array|false
-    {
-        return $this->fetch(PDO::FETCH_KEY_PAIR);
+        $status = $this->stmt->execute($params);
+        return $status ? new PDOResult($this->stmt) : false;
     }
 }
