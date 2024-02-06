@@ -148,6 +148,14 @@ class PDO
     }
 
     /**
+     * Return the underlying PDO instance
+     */
+    public function getPdo(): \PDO
+    {
+        return $this->pdo;
+    }
+
+    /**
      * Prepares a statement for execution and returns a statement object
      */
     public function prepare(string $query, array $options = []): PDOStatement|false
