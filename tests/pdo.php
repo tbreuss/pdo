@@ -71,9 +71,9 @@ $drivers = $db::getAvailableDrivers();
 $expected = ['dblib', 'mysql', 'odbc', 'pgsql', 'sqlite'];
 assert_equal($drivers, $expected, 'Get available drivers');
 
-# Get Pdo
-$pdo = $db->getPdo();
-assert_instanceof($pdo, \PDO::class, 'Get PDO');
+# Get wrapped PDO
+$pdo = $db->getWrappedPdo();
+assert_instanceof($pdo, \PDO::class, 'Get wrapped PDO');
 
 # In transaction
 $status = $db->inTransaction();
