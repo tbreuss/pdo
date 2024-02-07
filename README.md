@@ -123,6 +123,10 @@ The `tebe\PDOStatement` class differs from `PDOStatement` in that it contains on
 
 Creates a `tebe\PDOStatement` instance representing a query statement and wraps the original `PDOStatement`.
 
+```php
+public PDOStatement::__construct(\PDOStatement $stmt)
+```
+
 #### execute
 
 Executes a prepared statement
