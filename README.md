@@ -63,15 +63,15 @@ The documentation will be completed shortly, in the meantime please refer to the
 **tebe\PDOStatement**
 
 - [queryString](#querystring)
-- [__construct](#__construct)
+- [__construct](#__construct-1)
 - [bindColumn](#bindcolumn)
 - [bindParam](#bindparam)
 - [bindValue](#bindvalue)
-- [errorCode](#errorcode)
-- [errorInfo](#errorinfo)
+- [errorCode](#errorcode-1)
+- [errorInfo](#errorinfo-1)
 - [execute](#execute)
-- [getAttribute](#getattribute)
-- [setAttribute](#setattribute)
+- [getAttribute](#getattribute-1)
+- [setAttribute](#setattribute-1)
 
 **tebe\PDOResult**  
 **tebe\PDOParser**  
