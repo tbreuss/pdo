@@ -58,6 +58,7 @@ The documentation will be completed shortly, in the meantime please refer to the
 - [query](#query)
 - [quote](#quote)
 - [rollBack](#rollback)
+- [run](#run)
 - [setAttribute](#setattribute)
 
 **tebe\PDOStatement**
@@ -165,6 +166,16 @@ See [php.net](https://php.net/pdo.quote)
 ### rollBack
 
 See [php.net](https://php.net/pdo.rollBack)
+
+### run
+
+Runs a query with bound values and returns the resulting `tebe\PDOResult`. 
+
+Array values will be processed by the parser instance and placeholders are replaced.
+
+```php
+public PDO::run(string $sql, ?array $args = null): PDOResult|false
+```
 
 ### setAttribute
 
