@@ -150,7 +150,7 @@ class PDO
     /**
      * Return the underlying PDO instance
      */
-    public function getPdo(): \PDO
+    public function getWrappedPdo(): \PDO
     {
         return $this->pdo;
     }
@@ -158,7 +158,7 @@ class PDO
     /**
      * Prepares a statement for execution and returns a statement object
      * 
-     * This differs from `PDO::prepare` in that it will return a tebe\PDOStatement object.
+     * This differs from `PDO::prepare` in that it will return a `tebe\PDOStatement` object.
      */
     public function prepare(string $query, array $options = []): PDOStatement|false
     {
@@ -167,9 +167,9 @@ class PDO
     }
 
     /**
-     * Prepares and executes an SQL statement without placeholders
+     * Prepares and executes an SQL statement without placeholders and returns a result object
      * 
-     * This differs from `PDO::query` in that it will return a tebe\PDOResult object.
+     * This differs from `PDO::query` in that it will return a `tebe\PDOResult` object.
      */
     public function query(string $query, mixed ...$fetchModeArgs): PDOResult|false
     {
@@ -178,7 +178,7 @@ class PDO
     }
 
     /**
-     * Quotes a string for use in a query
+     * Quotes a value for use in a query
      * 
      * This differs from `PDO::quote()` in that it will convert an array into 
      * a string of comma-separated quoted values.
