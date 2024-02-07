@@ -91,9 +91,6 @@ class PDO
     public const CURSOR_FWDONLY = \PDO::CURSOR_FWDONLY;
     public const CURSOR_SCROLL = \PDO::CURSOR_SCROLL;
 
-    // our new attribute
-    public const ATTR_STATEMENT_FLUENT_INTERFACE = 1;
-
     protected \PDO $pdo;
     protected PDOParser $parser;
 
