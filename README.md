@@ -202,12 +202,6 @@ public PDOResult::fetchNumeric(): array|false
 public PDOResult::fetchPair(): array|false
 ```
 
-### fetchNumeric
-
-```php
-public PDOResult::fetchNumeric(): array|false
-```
-
 ### fetchAllAssoc
 
 ```php
@@ -282,6 +276,7 @@ For the remaining `tebe\PDOResult` methods, which are just wrapper methods of th
 - [fetchColumn](https://php.net/pdostatement.fetchColumn)
 - [fetchObject](https://php.net/pdostatement.fetchObject)
 - [getColumnMeta](https://php.net/pdostatement.getColumnMeta)
+- [getIterator](https://php.net/pdostatement.getIterator)
 - [nextRowset](https://php.net/pdostatement.nextRowset)
 - [rowCount](https://php.net/pdostatement.rowCount)
 - [setFetchMode](https://php.net/pdostatement.setFetchMode)
