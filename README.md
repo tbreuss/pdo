@@ -144,7 +144,6 @@ See [php.net](https://php.net/pdostatement.execute)
 For the remaining `tebe\PDOStatement` methods, which are just wrapper methods of the `PDO` class, see the documentation at [php.net](https://php.net/pdostatement).
 
 - [queryString](https://php.net/pdostatement)
-- [bindColumn](https://php.net/pdostatement.bindcolumn)
 - [bindParam](https://php.net/pdostatement.bindParam)
 - [bindValue](https://php.net/pdostatement.bindValue)
 - [errorCode](https://php.net/pdostatement.errorCode)
@@ -270,6 +269,7 @@ public PDOResult::fetchAllUnique(int $style = 0): array
 
 For the remaining `tebe\PDOResult` methods, which are just wrapper methods of the `PDOStatement` class, see the documentation at [php.net](https://php.net/pdostatement).
 
+- [bindColumn](https://php.net/pdostatement.bindcolumn)
 - [closeCursor](https://php.net/pdostatement.closeCursor)
 - [columnCount](https://php.net/pdostatement.columnCount)
 - [debugDumpParams](https://php.net/pdostatement.debugDumpParams)
