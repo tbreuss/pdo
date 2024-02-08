@@ -55,6 +55,15 @@ class PDOResult implements \IteratorAggregate
         throw new \BadMethodCallException("Method $name doesn't exist");
     }
 
+    /**
+     * Bind a column to a PHP variable
+     */
+    public function bindColumn(string|int $column, mixed &$var, int $type = PDO::PARAM_STR, int $maxLength = 0, mixed $driverOptions = null): bool
+    {
+        // method was implemented because of the passed by reference $var param
+        return $this->stmt->bindColumn($column, $var, $type, $maxLength, $driverOptions);
+    }
+
     // Fetch methods
 
     public function fetchAffected(): int

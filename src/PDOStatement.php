@@ -3,8 +3,6 @@
 namespace tebe;
 
 /**
- * @method bool bindColumn(string|int $column, mixed &$var, int $type = PDO::PARAM_STR, int $maxLength = 0, mixed $driverOptions = null) Bind a column to a PHP variable
- * @method bool bindParam(string|int $param, mixed &$var, int $type = PDO::PARAM_STR, int $maxLength = 0, mixed $driverOptions = null) Binds a parameter to the specified variable name
  * @method bool bindValue(string|int $param, mixed $value, int $type = PDO::PARAM_STR) Binds a value to a parameter
  * @method ?string errorCode() Fetch the SQLSTATE associated with the last operation on the statement handle
  * @method array errorInfo() Fetch extended error information associated with the last operation on the statement handle
@@ -35,8 +33,6 @@ class PDOStatement
     public function __call(string $name, array $arguments): mixed
     {
         $methods = [
-            'bindColumn', 
-            'bindParam', 
             'bindValue', 
             'errorCode', 
             'errorInfo', 
@@ -49,6 +45,15 @@ class PDOStatement
         }
 
         throw new \BadMethodCallException("Method $name doesn't exist");
+    }
+
+    /**
+     * Binds a parameter to the specified variable name
+     */
+    public function bindParam(string|int $param, mixed &$var, int $type = PDO::PARAM_STR, int $maxLength = 0, mixed $driverOptions = null): bool
+    {
+        // method was implemented because of the passed by reference $var param
+        return $this->stmt->bindParam($param, $var, $type, $maxLength, $driverOptions);
     }
 
     /**
