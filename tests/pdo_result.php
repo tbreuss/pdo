@@ -4,6 +4,8 @@ namespace tests;
 
 require_once __DIR__ . '/_setup.php';
 
+use tebe\PDO;
+
 // ------------------------------------------------------------------------------------------------------------------------
 // Misc methods
 // ------------------------------------------------------------------------------------------------------------------------
@@ -21,6 +23,20 @@ $sql = "SELECT id FROM fruits WHERE id IN (:ids1) OR id IN (:ids2) ORDER BY 1";
 $result = $db->run($sql, ['ids1' => $ids, 'ids2' => $ids])->fetchAllColumn();
 $expected = $ids;
 assert_equal($result, $expected, 'Bind array of values to named parameters');
+
+# Bind column
+
+$res = $db->prepare("SELECT * FROM fruits WHERE id = 6")->execute();
+$res->bindColumn(1, $id);
+$res->bindColumn(2, $name);
+$res->bindColumn('color', $color);
+$res->bindColumn('calories', $calories);
+$result = '';
+if ($res->fetch(PDO::FETCH_BOUND)) {    
+    $result = join('-', [$id, $name, $color, $calories]);
+}
+assert_equal($result, '6-Lemon-yellow-25', 'Bind column with column number and name');
+
 
 // ------------------------------------------------------------------------------------------------------------------------
 // Fetch All methods
