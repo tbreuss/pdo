@@ -9,6 +9,7 @@ namespace tebe;
  * @method array errorInfo() Fetch extended error information associated with the last operation on the database handle
  * @method int|false exec(string $statement) Execute an SQL statement and return the number of affected rows
  * @method mixed getAttribute(int $attribute) Retrieve a database connection attribute
+ * @method array getAvailableDrivers() Return an array of available PDO drivers
  * @method bool inTransaction() Checks if inside a transaction
  * @method string|false lastInsertId(?string $name = null) Returns the ID of the last inserted row or sequence value
  * @method bool rollBack() Rolls back a transaction
@@ -112,7 +113,7 @@ class PDO
     }
 
     /**
-     * Calls the method of the original PDO object
+     * Calls the method of the underlying PDO instance
      */
     public function __call(string $name, array $arguments): mixed
     {
@@ -137,11 +138,20 @@ class PDO
     }
 
     /**
-     * Return an array of available PDO drivers
+     * 
+     * Calls the static method of the underlying PDO instance
      */
-    public static function getAvailableDrivers(): array
+    public static function __callStatic(string $name, array $arguments): mixed
     {
-        return \PDO::getAvailableDrivers();
+        $methods = [
+            'getAvailableDrivers',
+        ];
+
+        if (in_array($name, $methods)) {
+            return call_user_func_array([\PDO::class, $name], $arguments);
+        }
+
+        throw new \BadMethodCallException("Static method $name doesn't exist");        
     }
 
     /**
