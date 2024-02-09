@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tebe;
 
 /**
@@ -192,13 +194,13 @@ class PDO
      */
     public function quote(array|string|int|float|null $value, int $type = self::PARAM_STR): string|false
     {
-        $value = $value ?? '';
-
         if (!is_array($value)) {
+            $value = strval($value ?? '');
             return $this->pdo->quote($value, $type);
         }
 
         foreach ($value as $k => $v) {
+            $v = strval($v ?? '');
             $value[$k] = $this->pdo->quote($v, $type);
         }
 
