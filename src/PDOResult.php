@@ -60,7 +60,7 @@ class PDOResult implements \IteratorAggregate
      */
     public function bindColumn(string|int $column, mixed &$var, int $type = PDO::PARAM_STR, int $maxLength = 0, mixed $driverOptions = null): bool
     {
-        // method was implemented because of the passed by reference $var param
+        // method is implemented because of the passed by reference $var param
         return $this->stmt->bindColumn($column, $var, $type, $maxLength, $driverOptions);
     }
 
