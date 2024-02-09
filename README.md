@@ -10,8 +10,8 @@ Added functionality in `tebe\pdo` over the native PDO includes:
 - New `PDO::run()` method. This is for convenience to prepare and execute an SQL statement in one step.
 - Bind array of values to placeholder in `PDO::run()` method. Placeholders that represent array values will be replaced with comma-separated quoted values. This means you can bind an array of values to a placeholder used with an IN (...) condition.
 - Array quoting. The `PDO::quote()` method will accept an array as input, and return a string of comma-separated quoted values.
-- Several `PDOResult::fetch*()` methods. The new methods provide for commonly-used fetch actions.
-- Several `PDOResult::fetchAll*()` methods. The new methods provide for commonly-used fetch all actions.
+- Several `PDOStatement::fetch*()` methods. The new methods provide for commonly-used fetch actions.
+- Several `PDOStatement::fetchAll*()` methods. The new methods provide for commonly-used fetch all actions.
 
 ## Installation and Autoloading
 
@@ -22,7 +22,6 @@ Alternatively, download a release, or clone this repository, then include the cl
 ```php
 include '{path/to/tebe/pdo}/src/PDO.php';
 include '{path/to/tebe/pdo}/src/PDOStatement.php';
-include '{path/to/tebe/pdo}/src/PDOResult.php';
 include '{path/to/tebe/pdo}/src/PDOParser.php';
 ```
 
@@ -58,10 +57,10 @@ See [php.net](https://php.net/pdo.prepare)
 
 Prepares and executes an SQL statement without placeholders.
 
-This differs from `PDO::query` in that it will return a `tebe\PDOResult` object.
+This differs from `PDO::query` in that it will return a `tebe\PDOStatement` object.
 
 ```php
-public PDO::query(string $query, mixed ...$fetchModeArgs): PDOResult|false
+public PDO::query(string $query, mixed ...$fetchModeArgs): PDOStatement|false
 ```
 
 See [php.net](https://php.net/pdo.query)
@@ -80,12 +79,12 @@ See [php.net](https://php.net/pdo.quote)
 
 ### run
 
-Runs a query with bound values and returns the resulting `tebe\PDOResult`. 
+Runs a query with bound values and returns the resulting `tebe\PDOStatement`. 
 
 Array values will be processed by the parser instance and placeholders are replaced.
 
 ```php
-public PDO::run(string $sql, ?array $args = null): PDOResult|false
+public PDO::run(string $sql, ?array $args = null): PDOStatement|false
 ```
 
 ---
@@ -108,6 +107,7 @@ For the remaining `tebe\PDO` methods, which are just wrapper methods of the `PDO
 ## tebe\PDOStatement
 
 The `tebe\PDOStatement` class differs from `PDOStatement` in that it contains only those methods that are related to the prepared statement.
+Besides that it contains several new fetch*() and fetchAll*() methodes for commonly-used fetch actions.
 
 #### __construct
 
@@ -121,143 +121,123 @@ public PDOStatement::__construct(\PDOStatement $stmt)
 
 Executes a prepared statement
 
-This differs from `PDOStatement::execute` in that it will return a `tebe\PDOResult` object.
+This differs from `PDOStatement::execute` in that it will return a `tebe\PDOStatement` object.
 
 ```php
-public PDOStatement::execute(?array $params = null): PDOResult|false
+public PDOStatement::execute(?array $params = null): PDOStatement|false
 ```
 
 See [php.net](https://php.net/pdostatement.execute)
 
----
-
-For the remaining `tebe\PDOStatement` methods, which are just wrapper methods of the `PDO` class, see the documentation at [php.net](https://php.net/pdostatement).
-
-- [queryString](https://php.net/pdostatement)
-- [bindParam](https://php.net/pdostatement.bindParam)
-- [bindValue](https://php.net/pdostatement.bindValue)
-- [getAttribute](https://php.net/pdostatement.getAttribute)
-- [setAttribute](https://php.net/pdostatement.setAttribute)
-
-## tebe\PDOResult
-
-The `tebe\PDOResult` is a new class that contains those methods from `PDOStatement` that are related to the associated result set of an executed statement.
-
-Besides that it contains several new fetch*() and fetchAll*() methodes for commonly-used fetch actions.
-
-### __construct
-
-```php
-public PDOResult::__construct(\PDOStatement $stmt)
-```
-
 ### fetchAffected
 
 ```php
-public PDOResult::fetchAffected(): int
+public PDOStatement::fetchAffected(): int
 ```
 
 ### fetchAssoc
 
 ```php
-public PDOResult::fetchAssoc(): array|false
+public PDOStatement::fetchAssoc(): array|false
 ```
 
 ### fetchBoth
 
 ```php
-public PDOResult::fetchBoth(): array|false
+public PDOStatement::fetchBoth(): array|false
 ```
 
 ### fetchInto
 
 ```php
-public PDOResult::fetchInto(): object|false
+public PDOStatement::fetchInto(): object|false
 ```
 
 ### fetchNamed
 
 ```php
-public PDOResult::fetchNamed(): array|false
+public PDOStatement::fetchNamed(): array|false
 ```
 
 ### fetchNumeric
 
 ```php
-public PDOResult::fetchNumeric(): array|false
+public PDOStatement::fetchNumeric(): array|false
 ```
 
 ### fetchPair
 
 ```php
-public PDOResult::fetchPair(): array|false
+public PDOStatement::fetchPair(): array|false
 ```
 
 ### fetchAllAssoc
 
 ```php
-public PDOResult::fetchAllAssoc(): array
+public PDOStatement::fetchAllAssoc(): array
 ```
 
 ### fetchAllBoth
 
 ```php
-public PDOResult::fetchAllBoth(): array
+public PDOStatement::fetchAllBoth(): array
 ```
 
 ### fetchAllColumn
 
 ```php
-public PDOResult::fetchAllColumn(int $column = 0): array
+public PDOStatement::fetchAllColumn(int $column = 0): array
 ```
 
 ### fetchAllFunction
 
 ```php
-public PDOResult::fetchAllFunction(callable $callable): array
+public PDOStatement::fetchAllFunction(callable $callable): array
 ```
 
 ### fetchAllGroup
 
 ```php
-public PDOResult::fetchAllGroup(int $style = 0): array
+public PDOStatement::fetchAllGroup(int $style = 0): array
 ```
 
 ### fetchAllNamed
 
 ```php
-public PDOResult::fetchAllNamed(): array
+public PDOStatement::fetchAllNamed(): array
 ```
 
 ### fetchAllNumeric
 
 ```php
-public PDOResult::fetchAllNumeric(): array
+public PDOStatement::fetchAllNumeric(): array
 ```
 
 ### fetchAllObject
 
 ```php
-public PDOResult::fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
+public PDOStatement::fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
 ```
 
 ### fetchAllPair
 
 ```php
-public PDOResult::fetchAllPair(): array
+public PDOStatement::fetchAllPair(): array
 ```
 
 ### fetchAllUnique
 
 ```php
-public PDOResult::fetchAllUnique(int $style = 0): array
+public PDOStatement::fetchAllUnique(int $style = 0): array
 ```
 
 ---
 
-For the remaining `tebe\PDOResult` methods, which are just wrapper methods of the `PDOStatement` class, see the documentation at [php.net](https://php.net/pdostatement).
+For the `tebe\PDOStatement` methods, which are simple wrapper methods of the `PDO` class, see the documentation on [php.net](https://php.net/pdostatement).
 
 - [bindColumn](https://php.net/pdostatement.bindcolumn)
+- [bindParam](https://php.net/pdostatement.bindParam)
+- [bindValue](https://php.net/pdostatement.bindValue)
 - [closeCursor](https://php.net/pdostatement.closeCursor)
 - [columnCount](https://php.net/pdostatement.columnCount)
 - [debugDumpParams](https://php.net/pdostatement.debugDumpParams)
@@ -267,10 +247,12 @@ For the remaining `tebe\PDOResult` methods, which are just wrapper methods of th
 - [fetchAll](https://php.net/pdostatement.fetchAll)
 - [fetchColumn](https://php.net/pdostatement.fetchColumn)
 - [fetchObject](https://php.net/pdostatement.fetchObject)
+- [getAttribute](https://php.net/pdostatement.getAttribute)
 - [getColumnMeta](https://php.net/pdostatement.getColumnMeta)
 - [getIterator](https://php.net/pdostatement.getIterator)
 - [nextRowset](https://php.net/pdostatement.nextRowset)
 - [rowCount](https://php.net/pdostatement.rowCount)
+- [setAttribute](https://php.net/pdostatement.setAttribute)
 - [setFetchMode](https://php.net/pdostatement.setFetchMode)
 
 ## tebe\PDOParser
