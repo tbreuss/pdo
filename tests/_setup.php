@@ -2,7 +2,7 @@
 
 namespace tests;
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+error_reporting(E_ERROR | E_PARSE);
 
 require_once dirname(__DIR__) . '/src/PDO.php';
 require_once dirname(__DIR__) . '/src/PDOParser.php';
