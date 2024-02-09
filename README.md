@@ -2,16 +2,16 @@
 
 Provides an extension to the native PDO along with additional functionality.
 
-Because `tebe\pdo` is an extension of the native PDO in the style of a wrapper, code already using the native PDO or typehinted to the native PDO can use `tebe\pdo` without any changes for the most part.
+Because `tebe\pdo` is an extension of the native PDO in the style of a wrapper, code already using the native PDO or typehinted to the native PDO can use `tebe\pdo` with minimal changes for the most part.
 
 Added functionality in `tebe\pdo` over the native PDO includes:
 
-- New `PDO::run()` method. This is for convenience to prepare and execute an SQL statement in one step.
-- Array quoting. The `PDO::quote()` method will accept an array as input, and return a string of comma-separated quoted values.
-- Bind array of values to placeholder. Placeholders that represent array values will be replaced with comma-separated quoted values. This means you can bind an array of values to a placeholder used with an IN (...) condition when using `PDO::run()`
 - Exceptions by default. `tebe\pdo` starts in the ERRMODE_EXCEPTION mode for error reporting instead of the ERRMODE_SILENT mode.
-- Several `fetch*()` methods. The new methods provide for commonly-used fetch actions.
-- Several `fetchAll*()` methods. The new methods provide for commonly-used fetch all actions.
+- New `PDO::run()` method. This is for convenience to prepare and execute an SQL statement in one step.
+- Bind array of values to placeholder in `PDO::run()` method. Placeholders that represent array values will be replaced with comma-separated quoted values. This means you can bind an array of values to a placeholder used with an IN (...) condition.
+- Array quoting. The `PDO::quote()` method will accept an array as input, and return a string of comma-separated quoted values.
+- Several `PDOResult::fetch*()` methods. The new methods provide for commonly-used fetch actions.
+- Several `PDOResult::fetchAll*()` methods. The new methods provide for commonly-used fetch all actions.
 
 ## Installation and Autoloading
 
@@ -29,16 +29,6 @@ include '{path/to/tebe/pdo}/src/PDOParser.php';
 ## Dependencies
 
 This package requires PHP 8.1 or later; it has also been tested on PHP 8.1-8.3. We recommend using the latest available version of PHP as a matter of principle. `tebe\pdo` doesn't depend on other external packages.
-
-## Quality
-
-[![Testing tebe\pdo](https://github.com/tbreuss/pdo/actions/workflows/tests.yml/badge.svg)](https://github.com/tbreuss/pdo/actions/workflows/tests.yml)
-
-This project adheres to [Semantic Versioning](https://semver.org/).
-
-To run the functional tests at the command line, issue `composer install` and then `composer test` at the package root. (This requires [Composer](https://getcomposer.org/) to be available as `composer`.)
-
-This package attempts to comply with [PSR-1](https://www.php-fig.org/psr/psr-1/), [PSR-4](https://www.php-fig.org/psr/psr-4/), and [PSR-12](https://www.php-fig.org/psr/psr-12/). If you notice compliance oversights, please send a patch via pull request.
 
 ## Documentation
 
@@ -251,10 +241,10 @@ public PDOResult::fetchAllNumeric(): array
 public PDOResult::fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
 ```
 
-### fetchAllPairs
+### fetchAllPair
 
 ```php
-public PDOResult::fetchAllPairs(): array
+public PDOResult::fetchAllPair(): array
 ```
 
 ### fetchAllUnique
@@ -300,3 +290,13 @@ Rebuilds a statement with placeholders and bound values.
 ```php
 public PDOParser::rebuild(string $statement, array $values = []): array
 ```
+
+## Quality
+
+[![Testing tebe\pdo](https://github.com/tbreuss/pdo/actions/workflows/tests.yml/badge.svg)](https://github.com/tbreuss/pdo/actions/workflows/tests.yml)
+
+This project adheres to [Semantic Versioning](https://semver.org/).
+
+To run the functional tests at the command line, issue `composer install` and then `composer test` at the package root. (This requires [Composer](https://getcomposer.org/) to be available as `composer`.)
+
+This package attempts to comply with [PSR-1](https://www.php-fig.org/psr/psr-1/), [PSR-4](https://www.php-fig.org/psr/psr-4/), and [PSR-12](https://www.php-fig.org/psr/psr-12/). If you notice compliance oversights, please send a patch via pull request.
