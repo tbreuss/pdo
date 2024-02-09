@@ -69,3 +69,11 @@ assert_equal($count, 8, 'Execute without params');
 
 $count = (int)$db->prepare("SELECT COUNT(id) FROM fruits WHERE id > ?")->execute([5])->fetchColumn();
 assert_equal($count, 3, 'Execute with params');
+
+# Get attribute
+$attribute = $db->prepare("SELECT COUNT(id) FROM fruits")->getAttribute(PDO::ATTR_EMULATE_PREPARES);
+assert_equal($attribute, false, 'Get attribute');
+
+# Set attribute
+$status = $db->prepare("SELECT COUNT(id) FROM fruits")->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+assert_equal($status, false, 'Set attribute');

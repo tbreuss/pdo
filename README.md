@@ -146,8 +146,6 @@ For the remaining `tebe\PDOStatement` methods, which are just wrapper methods of
 - [queryString](https://php.net/pdostatement)
 - [bindParam](https://php.net/pdostatement.bindParam)
 - [bindValue](https://php.net/pdostatement.bindValue)
-- [errorCode](https://php.net/pdostatement.errorCode)
-- [errorInfo](https://php.net/pdostatement.errorInfo)
 - [getAttribute](https://php.net/pdostatement.getAttribute)
 - [setAttribute](https://php.net/pdostatement.setAttribute)
 
