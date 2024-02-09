@@ -147,7 +147,7 @@ class PDOResult implements \IteratorAggregate
         return $this->stmt->fetchAll(PDO::FETCH_CLASS | $style, $class);
     }
 
-    public function fetchAllPairs(): array
+    public function fetchAllPair(): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_KEY_PAIR);
     }

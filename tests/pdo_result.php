@@ -118,12 +118,12 @@ $result = array_map(fn ($item) => (array)$item, $result);
 $expected = [["id"=>3,"name"=>"Pear","color"=>"green","calories"=>150],["id"=>5,"name"=>"Lime","color"=>"green","calories"=>333],["id"=>4,"name"=>"Orange","color"=>"orange","calories"=>300],["id"=>7,"name"=>"Peach","color"=>"orange","calories"=>100],["id"=>2,"name"=>"Apple","color"=>"red","calories"=>150],["id"=>8,"name"=>"Cherry","color"=>"red","calories"=>200],["id"=>1,"name"=>"Banana","color"=>"yellow","calories"=>250],["id"=>6,"name"=>"Lemon","color"=>"yellow","calories"=>25]];
 assert_equal($result, $expected, 'Fetch all object');
 
-# Fetch All Pairs
+# Fetch All Pair
 
 $sql = "SELECT name, color FROM fruits ORDER BY 1";
-$result = $db->run($sql)->fetchAllPairs();
+$result = $db->run($sql)->fetchAllPair();
 $expected = ["Apple"=>"red","Banana"=>"yellow","Cherry"=>"red","Lemon"=>"yellow","Lime"=>"green","Orange"=>"orange","Peach"=>"orange","Pear"=>"green"];
-assert_equal($result, $expected, 'Fetch all pairs');
+assert_equal($result, $expected, 'Fetch all pair');
 
 # Fetch All Unique
 
