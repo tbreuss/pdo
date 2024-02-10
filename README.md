@@ -31,7 +31,6 @@ Create a PDO instance representing a connection to a database.
 
 ```php
 use tebe\PDO;
-use tebe\PDOStatement;
 $db = new PDO('sqlite:database.sqlite');
 ```
 
