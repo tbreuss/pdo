@@ -176,14 +176,14 @@ class PDO
     }
 
     /**
-     * Prepares and executes an SQL statement without placeholders and returns a result object
+     * Prepares and executes an SQL statement without placeholders and returns a statement object
      * 
-     * This differs from `PDO::query` in that it will return a `tebe\PDOResult` object.
+     * This differs from `PDO::query` in that it will return a `tebe\PDOStatement` object.
      */
-    public function query(string $query, mixed ...$fetchModeArgs): PDOResult|false
+    public function query(string $query, mixed ...$fetchModeArgs): PDOStatement|false
     {
         $stmt = $this->pdo->query($query, ...$fetchModeArgs);
-        return $stmt ? new PDOResult($stmt) : false;
+        return $stmt ? new PDOStatement($stmt) : false;
     }
 
     /**
@@ -208,14 +208,14 @@ class PDO
     }
 
     /**
-     * Runs a query with bound values and returns the resulting PDOResult; 
+     * Runs a query with bound values and returns the resulting PDOStatement; 
      * array values will be processed by the parser instance and placeholders are replaced.
      */
-    public function run(string $sql, ?array $args = null): PDOResult|false
+    public function run(string $sql, ?array $args = null): PDOStatement|false
     {
         if ($args === null) {
             $stmt = $this->pdo->query($sql);
-            return $stmt ? new PDOResult($stmt) : false;
+            return $stmt ? new PDOStatement($stmt) : false;
         }
         
         $isMultiArray = false;
@@ -234,6 +234,6 @@ class PDO
         $stmt = $this->pdo->prepare($sql);
         $status = $stmt->execute($args);
 
-        return $status ? new PDOResult($stmt) : false;
+        return $status ? new PDOStatement($stmt) : false;
     }
 }

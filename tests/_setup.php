@@ -6,7 +6,6 @@ error_reporting(E_ERROR | E_PARSE);
 
 require_once dirname(__DIR__) . '/src/PDO.php';
 require_once dirname(__DIR__) . '/src/PDOParser.php';
-require_once dirname(__DIR__) . '/src/PDOResult.php';
 require_once dirname(__DIR__) . '/src/PDOStatement.php';
 
 // ------------------------------------------------------------------------------------------------------------------------
