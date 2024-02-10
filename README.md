@@ -38,9 +38,17 @@ $db = new PDO('sqlite:database.sqlite');
 Execute an SQL statement without placeholders and return the number of affected rows.
 
 ```php
-$sql = "INSERT INTO fruits VALUES (9, 'Kiwi', 'braun', 200)";
+$sql = "INSERT INTO fruits VALUES
+(1, 'Banana', 'yellow', 250),
+(2, 'Apple', 'red', 150),
+(3, 'Pear', 'green', 150),
+(4, 'Orange', 'orange', 300),
+(5, 'Lime', 'green', 333),
+(6, 'Lemon', 'yellow', 25),
+(7, 'Peach', 'orange', 100),
+(8, 'Cherry', 'red', 200)";
 print $db->exec($sql);
-// outputs 1
+// outputs 8
 ```
 
 Prepare and execute an SQL statement without placeholders, and fetch all.
