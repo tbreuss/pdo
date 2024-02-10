@@ -25,6 +25,63 @@ include '{path/to/tebe/pdo}/src/PDOStatement.php';
 include '{path/to/tebe/pdo}/src/PDOParser.php';
 ```
 
+## Examples
+
+Create a PDO instance representing a connection to a database.
+
+```php
+use tebe\PDO;
+use tebe\PDOStatement;
+$db = new PDO('sqlite:database.sqlite');
+```
+
+Execute an SQL statement without placeholders and return the number of affected rows.
+
+```php
+$sql = "INSERT INTO fruits VALUES (9, 'Kiwi', 'braun', 200)";
+print $db->exec($sql);
+// outputs 1
+```
+
+Prepare and execute an SQL statement without placeholders, and fetch all.
+
+```php
+$sql = "SELECT name, color FROM fruits WHERE color = 'green' ORDER BY name";
+print json_encode($db->query($sql)->fetchAll());
+// outputs [{"name":"Lime","color":"green"},{"name":"Pear","color":"green"}]
+```
+
+Prepare a statement with placeholders for execution, return a statement object, and fetch columns.
+
+```php
+$sql = "SELECT name FROM fruits WHERE color = ? ORDER BY name";
+print json_encode($db->prepare($sql)->execute(['red'])->fetchAllColumn());
+// outputs ["Apple","Cherry"]
+```
+
+Run a query with placeholders, return the resulting PDOStatement, and fetch pairs.
+
+```php
+$sql = "SELECT name, calories FROM fruits WHERE color = ? ORDER BY name";
+print json_encode($db->run($sql, ['red'])->fetchAllPair());
+// outputs {"Banana":250,"Lemon":25}
+```
+
+Run a query with an IN clause and placeholders, return the resulting PDOStatement, and fetch grouped data.
+
+```php
+$sql = "SELECT color, name FROM fruits WHERE color IN (?) ORDER BY name";
+print json_encode($db->run($sql, [['green', 'red']])->fetchAllGroup());
+// outputs {"red":[{"name":"Apple"},{"name":"Cherry"}],"green":[{"name":"Lime"},{"name":"Pear"}]}
+```
+
+Quote an array for use in a query.
+
+```php
+print $db->quote(['red', 'green', 'yellow']);
+// outputs 'red', 'green', 'yellow'
+```
+
 ## Dependencies
 
 This package requires PHP 8.1 or later; it has also been tested on PHP 8.1-8.3. We recommend using the latest available version of PHP as a matter of principle. `tebe\pdo` doesn't depend on other external packages.
