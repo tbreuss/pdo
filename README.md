@@ -13,18 +13,6 @@ Added functionality in `tebe\pdo` over the native PDO includes:
 - New `PDOStatement::fetch*()` methods. The new methods provide for commonly-used fetch actions.
 - New `PDOStatement::fetchAll*()` methods. The new methods provide for commonly-used fetch all actions.
 
-## Installation and Autoloading
-
-This package is installable and PSR-4 autoloadable via Composer as `tebe/pdo`.
-
-Alternatively, download a release, or clone this repository, then include the classes manually:
-
-```php
-include '{path/to/tebe/pdo}/src/PDO.php';
-include '{path/to/tebe/pdo}/src/PDOStatement.php';
-include '{path/to/tebe/pdo}/src/PDOParser.php';
-```
-
 ## Examples
 
 Create a PDO instance representing a connection to a database.
@@ -89,13 +77,25 @@ print $db->quote(['red', 'green', 'yellow']);
 // outputs 'red', 'green', 'yellow'
 ```
 
+## Installation and Autoloading
+
+This package is installable and PSR-4 autoloadable via Composer as `tebe/pdo`.
+
+Alternatively, download a release, or clone this repository, then include the classes manually:
+
+```php
+include '{path/to/tebe/pdo}/src/PDO.php';
+include '{path/to/tebe/pdo}/src/PDOStatement.php';
+include '{path/to/tebe/pdo}/src/PDOParser.php';
+```
+
 ## Dependencies
 
 This package requires PHP 8.1 or later; it has been tested on PHP 8.1-8.3. We recommend using the latest available version of PHP as a matter of principle. `tebe\pdo` doesn't depend on other external packages.
 
 ## Documentation
 
-## tebe\PDO
+### tebe\PDO
 
 The class `tebe\PDO` is a wrapper for the native `PDO` class and implements all methods of this class. 
 
@@ -103,7 +103,7 @@ The main differences are that some methods return `tebe\PDOStatement` instances 
 
 In addition, the class contains a new method `run`, which executes a query with bound values and returns the resulting statement instance.
 
-### getWrappedPdo
+#### getWrappedPdo
 
 Returns the underlying PDO instance.
 
@@ -111,7 +111,7 @@ Returns the underlying PDO instance.
 public PDO::getWrappedPdo(): \PDO
 ```
 
-### prepare
+#### prepare
 
 Prepares a statement for execution and returns a statement object.
 
@@ -123,7 +123,7 @@ public PDO::prepare(string $query, array $options = []): PDOStatement|false
 
 See [php.net](https://php.net/pdo.prepare)
 
-### query
+#### query
 
 Prepares and executes an SQL statement without placeholders.
 
@@ -135,7 +135,7 @@ public PDO::query(string $query, mixed ...$fetchModeArgs): PDOStatement|false
 
 See [php.net](https://php.net/pdo.query)
 
-### quote
+#### quote
 
 Quotes a string for use in a query.
 
@@ -147,7 +147,7 @@ public PDO::quote(array|string|int|float|null $value, int $type = PDO::PARAM_STR
 
 See [php.net](https://php.net/pdo.quote)
 
-### run
+#### run
 
 Runs a query with bound values and returns the resulting `tebe\PDOStatement`. 
 
@@ -175,7 +175,7 @@ For more information, see [php.net](https://php.net/pdo).
 - [rollBack](https://php.net/pdo.rollBack)
 - [setAttribute](https://php.net/pdo.setAttribute)
 
-## tebe\PDOStatement
+### tebe\PDOStatement
 
 The class `tebe\PDOStatement` is a wrapper for the native `PDOStatement` class and implements all methods of this class. 
 
@@ -203,103 +203,103 @@ public PDOStatement::execute(?array $params = null): PDOStatement|false
 
 See [php.net](https://php.net/pdostatement.execute)
 
-### fetchAffected
+#### fetchAffected
 
 ```php
 public PDOStatement::fetchAffected(): int
 ```
 
-### fetchAssoc
+#### fetchAssoc
 
 ```php
 public PDOStatement::fetchAssoc(): array|false
 ```
 
-### fetchBoth
+#### fetchBoth
 
 ```php
 public PDOStatement::fetchBoth(): array|false
 ```
 
-### fetchInto
+#### fetchInto
 
 ```php
 public PDOStatement::fetchInto(): object|false
 ```
 
-### fetchNamed
+#### fetchNamed
 
 ```php
 public PDOStatement::fetchNamed(): array|false
 ```
 
-### fetchNumeric
+#### fetchNumeric
 
 ```php
 public PDOStatement::fetchNumeric(): array|false
 ```
 
-### fetchPair
+#### fetchPair
 
 ```php
 public PDOStatement::fetchPair(): array|false
 ```
 
-### fetchAllAssoc
+#### fetchAllAssoc
 
 ```php
 public PDOStatement::fetchAllAssoc(): array
 ```
 
-### fetchAllBoth
+#### fetchAllBoth
 
 ```php
 public PDOStatement::fetchAllBoth(): array
 ```
 
-### fetchAllColumn
+#### fetchAllColumn
 
 ```php
 public PDOStatement::fetchAllColumn(int $column = 0): array
 ```
 
-### fetchAllFunction
+#### fetchAllFunction
 
 ```php
 public PDOStatement::fetchAllFunction(callable $callable): array
 ```
 
-### fetchAllGroup
+#### fetchAllGroup
 
 ```php
 public PDOStatement::fetchAllGroup(int $style = 0): array
 ```
 
-### fetchAllNamed
+#### fetchAllNamed
 
 ```php
 public PDOStatement::fetchAllNamed(): array
 ```
 
-### fetchAllNumeric
+#### fetchAllNumeric
 
 ```php
 public PDOStatement::fetchAllNumeric(): array
 ```
 
-### fetchAllObject
+#### fetchAllObject
 
 ```php
 public PDOStatement::fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
 ```
 
-### fetchAllPair
+#### fetchAllPair
 
 ```php
 public PDOStatement::fetchAllPair(): array
 ```
 
-### fetchAllUnique
+#### fetchAllUnique
 
 ```php
 public PDOStatement::fetchAllUnique(int $style = 0): array
@@ -330,11 +330,11 @@ For more information, see [php.net](https://php.net/pdostatement).
 - [setAttribute](https://php.net/pdostatement.setAttribute)
 - [setFetchMode](https://php.net/pdostatement.setFetchMode)
 
-## tebe\PDOParser
+### tebe\PDOParser
 
 Class `tebe\PDOParser` offers parsing and rebuilding functions for all drivers.
 
-### __construct
+#### __construct
 
 Creates a `tebe\PDOParser` instance.
 
@@ -342,7 +342,7 @@ Creates a `tebe\PDOParser` instance.
 public PDOParser::__construct(string $driver)
 ```
 
-### rebuild
+#### rebuild
 
 Rebuilds a statement with placeholders and bound values.
 
