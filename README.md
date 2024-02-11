@@ -10,8 +10,8 @@ Added functionality in `tebe\pdo` over the native PDO includes:
 - New `PDO::run()` method. This is for convenience to prepare and execute an SQL statement in one step.
 - Bind array of values to placeholder in `PDO::run()` method. Placeholders that represent array values will be replaced with comma-separated quoted values. This means you can bind an array of values to a placeholder used with an IN (...) condition.
 - Array quoting. The `PDO::quote()` method will accept an array as input, and return a string of comma-separated quoted values.
-- Several `PDOStatement::fetch*()` methods. The new methods provide for commonly-used fetch actions.
-- Several `PDOStatement::fetchAll*()` methods. The new methods provide for commonly-used fetch all actions.
+- New `PDOStatement::fetch*()` methods. The new methods provide for commonly-used fetch actions.
+- New `PDOStatement::fetchAll*()` methods. The new methods provide for commonly-used fetch all actions.
 
 ## Installation and Autoloading
 
@@ -50,7 +50,7 @@ print $db->exec($sql);
 // outputs 8
 ```
 
-Prepare and execute an SQL statement without placeholders, and fetch all.
+Prepare and execute an SQL statement without placeholders, and fetch all rows from the result set.
 
 ```php
 $sql = "SELECT name, color FROM fruits WHERE color = 'green' ORDER BY name";
@@ -58,7 +58,7 @@ print json_encode($db->query($sql)->fetchAll());
 // outputs [{"name":"Lime","color":"green"},{"name":"Pear","color":"green"}]
 ```
 
-Prepare a statement with placeholders for execution, return a statement object, and fetch columns.
+Prepare a statement with placeholders for execution, return a statement object, and fetch all columns from the result set.
 
 ```php
 $sql = "SELECT name FROM fruits WHERE color = ? ORDER BY name";
@@ -66,7 +66,7 @@ print json_encode($db->prepare($sql)->execute(['red'])->fetchAllColumn());
 // outputs ["Apple","Cherry"]
 ```
 
-Run a query with placeholders, return the resulting PDOStatement, and fetch pairs.
+Run a query with placeholders, return the resulting PDOStatement, and fetch key value array (pairs) from the result set.
 
 ```php
 $sql = "SELECT name, calories FROM fruits WHERE color = ? ORDER BY name";
@@ -74,7 +74,7 @@ print json_encode($db->run($sql, ['red'])->fetchAllPair());
 // outputs {"Banana":250,"Lemon":25}
 ```
 
-Run a query with an IN clause and placeholders, return the resulting PDOStatement, and fetch grouped data.
+Run a query with an IN clause and placeholders, return the resulting PDOStatement, and fetch all rows grouped by color from the result set.
 
 ```php
 $sql = "SELECT color, name FROM fruits WHERE color IN (?) ORDER BY name";
@@ -91,11 +91,17 @@ print $db->quote(['red', 'green', 'yellow']);
 
 ## Dependencies
 
-This package requires PHP 8.1 or later; it has also been tested on PHP 8.1-8.3. We recommend using the latest available version of PHP as a matter of principle. `tebe\pdo` doesn't depend on other external packages.
+This package requires PHP 8.1 or later; it has been tested on PHP 8.1-8.3. We recommend using the latest available version of PHP as a matter of principle. `tebe\pdo` doesn't depend on other external packages.
 
 ## Documentation
 
 ## tebe\PDO
+
+The class `tebe\PDO` is a wrapper for the native `PDO` class and implements all methods of this class. 
+
+The main differences are that some methods return `tebe\PDOStatement` instances and the `quote` method can also handle arrays.
+
+In addition, the class contains a new method `run`, which executes a query with bound values and returns the resulting statement instance.
 
 ### getWrappedPdo
 
@@ -153,7 +159,8 @@ public PDO::run(string $sql, ?array $args = null): PDOStatement|false
 
 ---
 
-For the remaining `tebe\PDO` methods, which are just wrapper methods of the `PDO` class, see the documentation at [php.net](https://php.net/pdo).
+The remaining `tebe\PDO` methods are simple wrapper methods of the underlying `PDO` class.
+For more information, see [php.net](https://php.net/pdo).
 
 - [beginTransaction](https://php.net/pdo.beginTransaction)
 - [commit](https://php.net/pdo.commit)
@@ -170,8 +177,11 @@ For the remaining `tebe\PDO` methods, which are just wrapper methods of the `PDO
 
 ## tebe\PDOStatement
 
-The `tebe\PDOStatement` class differs from `PDOStatement` in that it contains only those methods that are related to the prepared statement.
-Besides that it contains several new fetch*() and fetchAll*() methodes for commonly-used fetch actions.
+The class `tebe\PDOStatement` is a wrapper for the native `PDOStatement` class and implements all methods of this class. 
+
+The main difference is that the `execute` method returns a statement instance. This was done to allow method chaining aka fluent interface.
+
+Besides that it contains several new `fetch*()` and `fetchAll*()` methodes for commonly-used fetch actions.
 
 #### __construct
 
@@ -297,7 +307,8 @@ public PDOStatement::fetchAllUnique(int $style = 0): array
 
 ---
 
-For the `tebe\PDOStatement` methods, which are simple wrapper methods of the `PDO` class, see the documentation on [php.net](https://php.net/pdostatement).
+The remaining `tebe\PDOStatement` methods are simple wrapper methods of the underlying `PDOStatement` class.
+For more information, see [php.net](https://php.net/pdostatement).
 
 - [bindColumn](https://php.net/pdostatement.bindcolumn)
 - [bindParam](https://php.net/pdostatement.bindParam)
@@ -320,6 +331,8 @@ For the `tebe\PDOStatement` methods, which are simple wrapper methods of the `PD
 - [setFetchMode](https://php.net/pdostatement.setFetchMode)
 
 ## tebe\PDOParser
+
+Class `tebe\PDOParser` offers parsing and rebuilding functions for all drivers.
 
 ### __construct
 
