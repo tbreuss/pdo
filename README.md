@@ -205,11 +205,15 @@ See [php.net](https://php.net/pdostatement.execute)
 
 #### fetchAffected
 
+Fetches the number of affected rows from the result set.
+
 ```php
 public PDOStatement::fetchAffected(): int
 ```
 
 #### fetchAssoc
+
+Fetches the next row from the result set as an associative array.
 
 ```php
 public PDOStatement::fetchAssoc(): array|false
@@ -217,11 +221,15 @@ public PDOStatement::fetchAssoc(): array|false
 
 #### fetchBoth
 
+Fetches the next row from the result set as an associative and indexed array.
+
 ```php
 public PDOStatement::fetchBoth(): array|false
 ```
 
 #### fetchInto
+
+Fetches the next row from the result as the updated passed object, by mapping the columns to named properties of the object.
 
 ```php
 public PDOStatement::fetchInto(): object|false
@@ -229,11 +237,16 @@ public PDOStatement::fetchInto(): object|false
 
 #### fetchNamed
 
+Fetches the next row from the result set as an associative array;
+If the result set contains multiple columns with the same name, an array of values per column name is returned.
+
 ```php
 public PDOStatement::fetchNamed(): array|false
 ```
 
 #### fetchNumeric
+
+Fetches the next row from the result set as an indexed array.
 
 ```php
 public PDOStatement::fetchNumeric(): array|false
@@ -241,11 +254,15 @@ public PDOStatement::fetchNumeric(): array|false
 
 #### fetchPair
 
+Fetches the next row from the result set as a key-value pair.
+
 ```php
 public PDOStatement::fetchPair(): array|false
 ```
 
 #### fetchAllAssoc
+
+Fetches all rows from the result set as an array of associative arrays.
 
 ```php
 public PDOStatement::fetchAllAssoc(): array
@@ -253,11 +270,15 @@ public PDOStatement::fetchAllAssoc(): array
 
 #### fetchAllBoth
 
+Fetches all rows from the result set as an array of associative and indexed arrays.
+
 ```php
 public PDOStatement::fetchAllBoth(): array
 ```
 
 #### fetchAllColumn
+
+Fetches all rows from the result set as an array of a single column.
 
 ```php
 public PDOStatement::fetchAllColumn(int $column = 0): array
@@ -265,11 +286,15 @@ public PDOStatement::fetchAllColumn(int $column = 0): array
 
 #### fetchAllFunction
 
+Fetches all rows from the result set as an array by calling a function for each row.
+
 ```php
 public PDOStatement::fetchAllFunction(callable $callable): array
 ```
 
 #### fetchAllGroup
+
+Fetches all rows from the result set as an array by grouping all rows by a single column.
 
 ```php
 public PDOStatement::fetchAllGroup(int $style = 0): array
@@ -277,11 +302,16 @@ public PDOStatement::fetchAllGroup(int $style = 0): array
 
 #### fetchAllNamed
 
+Fetches all rows from the result set as an array of associative arrays;
+If the result set contains multiple columns with the same name, an array of values per column name is returned.
+
 ```php
 public PDOStatement::fetchAllNamed(): array
 ```
 
 #### fetchAllNumeric
+
+Fetches all rows from the result set as an array of indexed arrays.
 
 ```php
 public PDOStatement::fetchAllNumeric(): array
@@ -289,11 +319,16 @@ public PDOStatement::fetchAllNumeric(): array
 
 #### fetchAllObject
 
+Fetches all rows from the result set as an array of objects of the requested class, 
+mapping the columns to named properties in the class.
+
 ```php
 public PDOStatement::fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
 ```
 
 #### fetchAllPair
+
+Fetches all rows from the result set as an array of key-value pairs.
 
 ```php
 public PDOStatement::fetchAllPair(): array

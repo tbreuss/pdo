@@ -46,7 +46,7 @@ class PDOStatement implements \IteratorAggregate
     }
 
     /**
-     * Calls the method of the original PDOStatement object
+     * Calls the method of the underlying PDOStatement object
      */
     public function __call(string $name, array $arguments): mixed
     {
@@ -105,81 +105,125 @@ class PDOStatement implements \IteratorAggregate
         return $status ? new PDOStatement($this->stmt) : false;
     }
 
-    // Fetch methods
-
+    /**
+     * Fetches the number of affected rows from the result set
+     */
     public function fetchAffected(): int
     {
         return $this->stmt->rowCount();
     }
     
+    /**
+     * Fetches the next row from the result set as an associative array
+     */
     public function fetchAssoc(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
     }
     
+    /**
+     * Fetches the next row from the result set as an associative and indexed array
+     */
     public function fetchBoth(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_BOTH);
     }
 
+    /**
+     * Fetches the next row from the result as the updated passed object, by mapping the columns to named properties of the object.
+     */
     public function fetchInto(object $object): object|false
     {
         $this->stmt->setFetchMode(PDO::FETCH_INTO, $object);
         return $this->stmt->fetch();
     }
 
+    /**
+     * Fetches the next row from the result set as an associative array;
+     * If the result set contains multiple columns with the same name, an array of values per column name is returned.
+     */
     public function fetchNamed(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_NAMED);
     }
 
+    /**
+     * Fetches the next row from the result set as an indexed array
+     */    
     public function fetchNumeric(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_NUM);
     }
 
+    /**
+     * Fetches the next row from the result set as a key-value pair
+     */     
     public function fetchPair(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_KEY_PAIR);
     }
 
-    // Fetch all methods
-
+    /**
+     * Fetches all rows from the result set as an array of associative arrays
+     */
     public function fetchAllAssoc(): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    /**
+     * Fetches all rows from the result set as an array of associative and indexed arrays
+     */
     public function fetchAllBoth(): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_BOTH);
     }
 
+    /**
+     * Fetches all rows from the result set as an array of a single column
+     */
     public function fetchAllColumn(int $column = 0): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_COLUMN, $column);
     }
 
+    /**
+     * Fetches all rows from the result set as an array by calling a function for each row
+     */    
     public function fetchAllFunction(callable $callable): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_FUNC, $callable);
     }
 
+    /**
+     * Fetches all rows from the result set as an array by grouping all rows by a single column
+     */
     public function fetchAllGroup(int $style = 0): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_GROUP | $style);
     }
 
+    /**
+     * Fetches all rows from the result set as an array of associative arrays;
+     * If the result set contains multiple columns with the same name, an array of values per column name is returned.
+     */
     public function fetchAllNamed(): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_NAMED);
     }
 
+    /**
+     * Fetches all rows from the result set as an array of indexed arrays
+     */
     public function fetchAllNumeric(): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_NUM);
     }
 
+    /**
+     * Fetches all rows from the result set as an array of objects of the requested class, 
+     * mapping the columns to named properties in the class
+     */
     public function fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
     {
         if ($constructorArgs) {
@@ -188,16 +232,25 @@ class PDOStatement implements \IteratorAggregate
         return $this->stmt->fetchAll(PDO::FETCH_CLASS | $style, $class);
     }
 
+    /**
+     * Fetches all rows from the result set as an array of key-value pairs
+     */
     public function fetchAllPair(): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_KEY_PAIR);
     }
 
+    /**
+     * TODO add description
+     */
     public function fetchAllUnique(int $style = 0): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_UNIQUE | $style);
     }
 
+    /**
+     * Gets result set iterator
+     */
     public function getIterator(): \Iterator
     {
         return $this->stmt->getIterator();
