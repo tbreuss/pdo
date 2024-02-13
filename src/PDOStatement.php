@@ -243,7 +243,7 @@ class PDOStatement implements \IteratorAggregate
     }
 
     /**
-     * TODO add description
+     * Fetches all rows from the result set as an array of arrays, indexed by an unique field
      */
     public function fetchAllUnique(int $style = 0): array
     {
