@@ -1,3 +1,7 @@
+[![PHP Version Require](http://poser.pugx.org/tebe/pdo/require/php)](https://packagist.org/packages/tebe/pdo)
+[![Version](http://poser.pugx.org/tebe/pdo/version)](https://packagist.org/packages/tebe/pdo)
+[![Testing tebe\pdo](https://github.com/tbreuss/pdo/actions/workflows/tests.yml/badge.svg)](https://github.com/tbreuss/pdo/actions/workflows/tests.yml)
+
 # tebe\pdo
 
 Provides an extension to the native PDO along with additional functionality.
@@ -232,7 +236,7 @@ public PDOStatement::fetchBoth(): array|false
 Fetches the next row from the result as the updated passed object, by mapping the columns to named properties of the object.
 
 ```php
-public PDOStatement::fetchInto(): object|false
+public PDOStatement::fetchInto(object $object): object|false
 ```
 
 #### fetchNamed
