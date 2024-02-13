@@ -7,7 +7,11 @@ namespace tebe;
 use PDOException;
 
 /**
- * Copied from https://github.com/auraphp/Aura.Sql and simplified.
+ * Parsing/rebuilding functionality for all drivers.
+ *
+ * Note that this does not validate the syntax; it only replaces/rebuilds placeholders in the query.
+ * 
+ * @link https://github.com/auraphp/Aura.Sql Copied from aura/sql and simplified according to our needs
  */
 class PDOParser
 {

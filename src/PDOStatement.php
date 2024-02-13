@@ -5,26 +5,28 @@ declare(strict_types=1);
 namespace tebe;
 
 /**
+ * Represents a prepared statement and, after the statement is executed, an associated result set.
+ * 
  * @method bool bindValue(string|int $param, mixed $value, int $type = PDO::PARAM_STR) Binds a value to a parameter
  * @method bool closeCursor() Closes the cursor, enabling the statement to be executed again
  * @method int columnCount() Returns the number of columns in the result set
- * @method ?bool debugDumpParams() Dump an SQL prepared command
- * @method ?string errorCode() Fetch the SQLSTATE associated with the last operation on the statement handle
+ * @method bool|null debugDumpParams() Dump an SQL prepared command
+ * @method string|null errorCode() Fetch the SQLSTATE associated with the last operation on the statement handle
  * @method array errorInfo() Fetch extended error information associated with the last operation on the statement handle
  * @method mixed fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0) Fetches the next row from a result set
  * @method array fetchAll(int $mode = PDO::FETCH_DEFAULT) Fetches the remaining rows from a result set
  * @method array fetchAll(int $mode = PDO::FETCH_COLUMN, int $column) Fetches the remaining rows from a result set
- * @method array fetchAll(int $mode = PDO::FETCH_CLASS, string $class, ?array $constructorArgs) Fetches the remaining rows from a result set
+ * @method array fetchAll(int $mode = PDO::FETCH_CLASS, string $class, array|null $constructorArgs) Fetches the remaining rows from a result set
  * @method array fetchAll(int $mode = PDO::FETCH_FUNC, callable $callback) Fetches the remaining rows from a result set
  * @method array fetchColumn(int $column = 0) Returns a single column from the next row of a result set
- * @method object|false fetchObject(?string $class = "stdClass", array $constructorArgs = []) Fetches the next row and returns it as an object
+ * @method object|false fetchObject(string|null $class = "stdClass", array $constructorArgs = []) Fetches the next row and returns it as an object
  * @method mixed getAttribute(int $name) Retrieve a statement attribute
  * @method false nextRowset() Advances to the next rowset in a multi-rowset statement handle
  * @method int rowCount() Returns the number of rows affected by the last SQL statement
  * @method bool setAttribute(int $attribute, mixed $value) Set a statement attribute
  * @method bool setFetchMode(int $mode) Set the default fetch mode for this statement
  * @method bool setFetchMode(int $mode = PDO::FETCH_COLUMN, int $colno) Set the default fetch mode for this statement
- * @method bool setFetchMode(int $mode = PDO::FETCH_CLASS, string $class, ?array $constructorArgs = null) Set the default fetch mode for this statement
+ * @method bool setFetchMode(int $mode = PDO::FETCH_CLASS, string $class, array|null $constructorArgs = null) Set the default fetch mode for this statement
  * @method bool setFetchMode(int $mode = PDO::FETCH_INTO, object $object) Set the default fetch mode for this statement
  */
 class PDOStatement implements \IteratorAggregate

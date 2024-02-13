@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace tebe;
 
 /**
+ * Represents a connection between PHP and a database server.
+ * 
  * @method bool beginTransaction() Initiates a transaction
  * @method bool commit() Commits a transaction
- * @method ?string errorCode() Fetch the SQLSTATE associated with the last operation on the database handle
+ * @method string|null errorCode() Fetch the SQLSTATE associated with the last operation on the database handle
  * @method array errorInfo() Fetch extended error information associated with the last operation on the database handle
  * @method int|false exec(string $statement) Execute an SQL statement and return the number of affected rows
  * @method mixed getAttribute(int $attribute) Retrieve a database connection attribute
  * @method static array getAvailableDrivers() Return an array of available PDO drivers
  * @method bool inTransaction() Checks if inside a transaction
- * @method string|false lastInsertId(?string $name = null) Returns the ID of the last inserted row or sequence value
+ * @method string|false lastInsertId(string|null $name = null) Returns the ID of the last inserted row or sequence value
  * @method bool rollBack() Rolls back a transaction
  * @method bool setAttribute(int $attribute, mixed $value) Set an attribute
  */
