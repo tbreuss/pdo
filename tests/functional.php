@@ -62,13 +62,13 @@ function init_db(): \tebe\PDO
 
 (function() {
     global $numberOfAssertions;
-    $fqnFunctions = get_defined_functions()['user'] ?? [];
-    $functionFilter = function(string $fqnFunction): bool {
-        $pathWithFunctionName = explode('\\', $fqnFunction);
-        $functionName = end($pathWithFunctionName);
+    $definedFunctions = get_defined_functions()['user'] ?? [];
+    $filterCallback = function(string $function): bool {
+        $namespaceWithFunction = explode('\\', $function);
+        $functionName = end($namespaceWithFunction);
         return str_starts_with($functionName, 'test_');
     };
-    $testFunctions = array_filter($fqnFunctions, $functionFilter);
+    $testFunctions = array_filter($definedFunctions, $filterCallback);
     $countTestFunctions = count($testFunctions);
     print "Start testing\n";
     foreach ($testFunctions as $testFunction) {
