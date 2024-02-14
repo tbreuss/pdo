@@ -27,8 +27,7 @@
     },    
     "scripts": {
         "test": [
-            "@php tests/pdo.php",
-            "@php tests/pdo_statement.php"
+            "@php tests/functional.php"
         ]
     }
 }

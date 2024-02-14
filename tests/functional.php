@@ -1,25 +1,26 @@
 <?php
 
-namespace tests;
+namespace tebe\pdo\tests;
+
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 
 error_reporting(E_ERROR | E_PARSE);
 
 require_once dirname(__DIR__) . '/src/PDO.php';
 require_once dirname(__DIR__) . '/src/PDOParser.php';
 require_once dirname(__DIR__) . '/src/PDOStatement.php';
+require_once __DIR__ . '/pdo.php';
+require_once __DIR__ . '/pdo_statement.php';
 
-// ------------------------------------------------------------------------------------------------------------------------
-// Helpers
-// ------------------------------------------------------------------------------------------------------------------------
-
-$numberOfTests = 0;
+$numberOfAssertions = 0;
 
 function _assert(mixed $assertion, string $message): void
 {
-    global $numberOfTests;
+    global $numberOfAssertions;
     assert($assertion, $message);
     echo '✓ ' . $message . PHP_EOL;
-    $numberOfTests++;
+    $numberOfAssertions++;
 }
 
 function assert_equal(mixed $result, mixed $expected, string $message) {
@@ -30,19 +31,18 @@ function assert_instanceof(mixed $result, string $class, string $message) {
     _assert($result instanceof $class, $message);
 }
 
-// ------------------------------------------------------------------------------------------------------------------------
-// Setup
-// ------------------------------------------------------------------------------------------------------------------------
-
 function init_db(): \tebe\PDO
-{
+{    
     $db = new \tebe\PDO('sqlite::memory:', options: [
         \tebe\PDO::ATTR_ERRMODE => \tebe\PDO::ERRMODE_SILENT,
         \tebe\PDO::ATTR_PERSISTENT => true
     ]);
 
+    $sql = "DROP TABLE IF EXISTS fruits";
+    $db->exec($sql);
+
     $sql = "CREATE TABLE fruits (id int, name varchar(20), color varchar(20), calories int)";
-    $db->run($sql);
+    $db->exec($sql);
     
     $sql = "
         INSERT INTO fruits VALUES
@@ -55,9 +55,24 @@ function init_db(): \tebe\PDO
             (7, 'Peach', 'orange', 100),
             (8, 'Cherry', 'red', 200)
     ";
-    $db->run($sql);
+    $db->exec($sql);
 
     return $db;
 }
 
-$db = init_db();
+(function() {
+    global $numberOfAssertions;
+    $fqnFunctions = get_defined_functions()['user'] ?? [];
+    $functionFilter = function(string $fqnFunction): bool {
+        $pathWithFunctionName = explode('\\', $fqnFunction);
+        $functionName = end($pathWithFunctionName);
+        return str_starts_with($functionName, 'test_');
+    };
+    $testFunctions = array_filter($fqnFunctions, $functionFilter);
+    $countTestFunctions = count($testFunctions);
+    print "Start testing\n";
+    foreach ($testFunctions as $testFunction) {
+        $testFunction();
+    }
+    print "Performed $countTestFunctions tests with $numberOfAssertions assertions\n";
+})();
