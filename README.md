@@ -1,7 +1,9 @@
 [![PHP Version Require](http://poser.pugx.org/tebe/pdo/require/php)](https://packagist.org/packages/tebe/pdo)
 [![Version](http://poser.pugx.org/tebe/pdo/version)](https://packagist.org/packages/tebe/pdo)
 [![Testing tebe\pdo](https://github.com/tbreuss/pdo/actions/workflows/tests.yml/badge.svg)](https://github.com/tbreuss/pdo/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+Mozilla
 # tebe\pdo
 
 Provides an extension to the native PDO along with additional functionality.
