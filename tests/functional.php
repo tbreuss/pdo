@@ -11,6 +11,7 @@ require_once dirname(__DIR__) . '/src/PDO.php';
 require_once dirname(__DIR__) . '/src/PDOParser.php';
 require_once dirname(__DIR__) . '/src/PDOStatement.php';
 require_once __DIR__ . '/pdo.php';
+require_once __DIR__ . '/pdo_parser.php';
 require_once __DIR__ . '/pdo_statement.php';
 
 $numberOfAssertions = 0;
