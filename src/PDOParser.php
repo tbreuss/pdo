@@ -101,7 +101,7 @@ class PDOParser
 
     protected function prepareNumberedPlaceholder()
     {
-        $this->num ++;
+        $this->num++;
         if (array_key_exists($this->num, $this->values) === false) {
             throw new PDOException("Parameter {$this->num} is missing from the bound values");
         }
@@ -112,7 +112,7 @@ class PDOParser
             $values[] = null;
         }
         foreach ($values as $value) {
-            $count = ++ $this->count['__'];
+            $count = ++$this->count['__'];
             $name = "__{$count}";
             $expanded[] = ":{$name}";
             $this->final_values[$name] = $value;
@@ -143,12 +143,12 @@ class PDOParser
 
     protected function getPlaceholderName(string $orig): string
     {
-        if (! isset($this->count[$orig])) {
+        if (!isset($this->count[$orig])) {
             $this->count[$orig] = 0;
             return $orig;
         }
 
-        $count = ++ $this->count[$orig];
+        $count = ++$this->count[$orig];
         return "{$orig}__{$count}";
     }
 
@@ -160,7 +160,7 @@ class PDOParser
             $name = "{$prefix}_{$i}";
             $expanded[] = ":{$name}";
             $this->final_values[$name] = $value;
-            $i ++;
+            $i++;
         }
         return implode(', ', $expanded);
     }
@@ -179,14 +179,14 @@ class PDOParser
     protected function determineSplitRegex($driver): array
     {
         // see https://github.com/auraphp/Aura.Sql/tree/5.x/src/Parser
-        return match($driver) {
+        return match ($driver) {
             'mysql' => [
                 // single-quoted string
                 "'(?:[^'\\\\]|\\\\'?)*'",
                 // double-quoted string
                 '"(?:[^"\\\\]|\\\\"?)*"',
                 // backtick-quoted string
-                '`(?:[^`\\\\]|\\\\`?)*`',                
+                '`(?:[^`\\\\]|\\\\`?)*`',
             ],
             'pgsql' => [
                 // single-quoted string
@@ -217,7 +217,7 @@ class PDOParser
 
     protected function determineSkipRegex($driver): string
     {
-        return match($driver) {
+        return match ($driver) {
             'mysql' => '/^(\'|\"|\`)/um',
             'pgsql' => '/^(\'|\"|\$|\:[^a-zA-Z_])/um',
             'sqlite' => '/^(\'|"|`|\:[^a-zA-Z_])/um',

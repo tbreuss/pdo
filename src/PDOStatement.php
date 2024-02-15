@@ -68,7 +68,7 @@ class PDOStatement implements \IteratorAggregate
             'nextRowset',
             'rowCount',
             'setAttribute',
-            'setFetchMode',          
+            'setFetchMode',
         ];
 
         if (in_array($name, $methods)) {
@@ -114,7 +114,7 @@ class PDOStatement implements \IteratorAggregate
     {
         return $this->stmt->rowCount();
     }
-    
+
     /**
      * Fetches the next row from the result set as an associative array
      */
@@ -122,7 +122,7 @@ class PDOStatement implements \IteratorAggregate
     {
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Fetches the next row from the result set as an associative and indexed array
      */
@@ -151,7 +151,7 @@ class PDOStatement implements \IteratorAggregate
 
     /**
      * Fetches the next row from the result set as an indexed array
-     */    
+     */
     public function fetchNumeric(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_NUM);
@@ -159,7 +159,7 @@ class PDOStatement implements \IteratorAggregate
 
     /**
      * Fetches the next row from the result set as a key-value pair
-     */     
+     */
     public function fetchPair(): array|false
     {
         return $this->stmt->fetch(PDO::FETCH_KEY_PAIR);
@@ -172,7 +172,7 @@ class PDOStatement implements \IteratorAggregate
     {
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Fetches all rows from the result set as an array of associative and indexed arrays
      */
@@ -191,7 +191,7 @@ class PDOStatement implements \IteratorAggregate
 
     /**
      * Fetches all rows from the result set as an array by calling a function for each row
-     */    
+     */
     public function fetchAllFunction(callable $callable): array
     {
         return $this->stmt->fetchAll(PDO::FETCH_FUNC, $callable);
@@ -256,5 +256,5 @@ class PDOStatement implements \IteratorAggregate
     public function getIterator(): \Iterator
     {
         return $this->stmt->getIterator();
-    }    
+    }
 }

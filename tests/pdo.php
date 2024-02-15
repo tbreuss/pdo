@@ -17,7 +17,7 @@ function test_pdo_begin_rollback_transaction(): void
 function test_pdo_begin_commit_transaction(): void
 {
     $db = init_db();
-    
+
     $db->beginTransaction();
     $db->exec("INSERT INTO fruits VALUES (999, 'XYZ', 'xyz', 999)");
     $db->commit();
@@ -27,10 +27,10 @@ function test_pdo_begin_commit_transaction(): void
     assert_equal($count, 9, 'Begin and commit back transaction');
 }
 
-function test_pdo_error_code(): void 
+function test_pdo_error_code(): void
 {
     $db = init_db();
-    
+
     $errorCode = $db->errorCode();
     assert_equal($errorCode, '00000', 'Empty error code');
 

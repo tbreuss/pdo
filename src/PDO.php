@@ -109,7 +109,7 @@ class PDO
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            ], 
+            ],
             $options
         );
         $this->pdo = new \PDO($dsn, $username, $password, $options);
@@ -155,7 +155,7 @@ class PDO
             return call_user_func_array([\PDO::class, $name], $arguments);
         }
 
-        throw new \BadMethodCallException("Static method $name doesn't exist");        
+        throw new \BadMethodCallException("Static method $name doesn't exist");
     }
 
     /**
@@ -219,7 +219,7 @@ class PDO
             $stmt = $this->pdo->query($sql);
             return $stmt ? new PDOStatement($stmt) : false;
         }
-        
+
         $isMultiArray = false;
         foreach ($args as $arg) {
             if (is_array($arg)) {

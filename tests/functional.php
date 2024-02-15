@@ -24,16 +24,18 @@ function _assert(mixed $assertion, string $message): void
     $numberOfAssertions++;
 }
 
-function assert_equal(mixed $result, mixed $expected, string $message) {
+function assert_equal(mixed $result, mixed $expected, string $message)
+{
     _assert($result === $expected, $message);
 }
 
-function assert_instanceof(mixed $result, string $class, string $message) {
+function assert_instanceof(mixed $result, string $class, string $message)
+{
     _assert($result instanceof $class, $message);
 }
 
 function init_db(): \tebe\PDO
-{    
+{
     // set options that are later used for tests
     $db = new \tebe\PDO('sqlite::memory:', options: [
         \tebe\PDO::ATTR_ERRMODE => \tebe\PDO::ERRMODE_SILENT,
@@ -46,7 +48,7 @@ function init_db(): \tebe\PDO
 
     $sql = "CREATE TABLE fruits (id int, name varchar(20), color varchar(20), calories int)";
     $db->exec($sql);
-    
+
     $sql = "
         INSERT INTO fruits VALUES
             (1, 'Banana', 'yellow', 250),
@@ -63,10 +65,10 @@ function init_db(): \tebe\PDO
     return $db;
 }
 
-(function() {
+(function () {
     global $numberOfAssertions;
     $definedFunctions = get_defined_functions()['user'] ?? [];
-    $filterCallback = function(string $function): bool {
+    $filterCallback = function (string $function): bool {
         $namespaceWithFunction = explode('\\', $function);
         $functionName = end($namespaceWithFunction);
         return str_starts_with($functionName, 'test_');
