@@ -34,9 +34,11 @@ function assert_instanceof(mixed $result, string $class, string $message) {
 
 function init_db(): \tebe\PDO
 {    
+    // set options that are later used for tests
     $db = new \tebe\PDO('sqlite::memory:', options: [
         \tebe\PDO::ATTR_ERRMODE => \tebe\PDO::ERRMODE_SILENT,
-        \tebe\PDO::ATTR_PERSISTENT => true
+        \tebe\PDO::ATTR_PERSISTENT => true,
+        \tebe\PDO::ATTR_CASE => \tebe\PDO::CASE_LOWER,
     ]);
 
     $sql = "DROP TABLE IF EXISTS fruits";

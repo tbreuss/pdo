@@ -153,11 +153,9 @@ function test_pdo_set_attribute(): void
 {
     $db = init_db();
 
-    $origAttr = $db->getAttribute($db::ATTR_CASE);
     $status = $db->setAttribute($db::ATTR_CASE, $db::CASE_UPPER);
     assert_equal($status, true, 'Set attribute return value');
 
     $attr = $db->getAttribute($db::ATTR_CASE);
     assert_equal($attr, $db::CASE_UPPER, 'Set attribute successful');
-    $db->setAttribute($db::ATTR_CASE, $origAttr); // set it back to orig status
 }
