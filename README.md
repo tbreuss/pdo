@@ -7,9 +7,9 @@
 
 Provides an extension to the native PDO along with additional functionality.
 
-Because `tebe\pdo` is an extension of the native PDO in the style of a wrapper, code already using the native PDO or typehinted to the native PDO can use `tebe\pdo` with minimal changes for the most part.
+`tebe\pdo` is an extension of the native PDO in the style of a thin wrapper. All constants, properties and methods of the underlying PDO classes are therefore available. Code already using or typehinted to the native PDO can use `tebe\pdo` with minimal changes for the most part.
 
-Added functionality in `tebe\pdo` over the native PDO includes:
+Added or changed functionality in `tebe\pdo` over the native PDO includes:
 
 - Exceptions by default. `tebe\pdo` starts in the ERRMODE_EXCEPTION mode for error reporting instead of the ERRMODE_SILENT mode.
 - New `PDO::run()` method. This is for convenience to prepare and execute an SQL statement in one step.
