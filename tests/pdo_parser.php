@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tebe\pdo\tests;
 
 use tebe\PDOParser;
