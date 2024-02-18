@@ -17,6 +17,9 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring
 
+      - name: Test PHP-Info
+        run: php -i
+  
       - name: Get composer cache directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
