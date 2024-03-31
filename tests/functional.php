@@ -35,13 +35,13 @@ function assert_instanceof(mixed $result, string $class, string $message)
     _assert($result instanceof $class, $message);
 }
 
-function init_db(): \tebe\PDO
+function init_db(): \tebe\pdo\PDO
 {
     // set options that are later used for tests
-    $db = new \tebe\PDO('sqlite::memory:', options: [
-        \tebe\PDO::ATTR_ERRMODE => \tebe\PDO::ERRMODE_SILENT,
-        \tebe\PDO::ATTR_PERSISTENT => true,
-        \tebe\PDO::ATTR_CASE => \tebe\PDO::CASE_LOWER,
+    $db = new \tebe\pdo\PDO('sqlite::memory:', options: [
+        \tebe\pdo\PDO::ATTR_ERRMODE => \tebe\pdo\PDO::ERRMODE_SILENT,
+        \tebe\pdo\PDO::ATTR_PERSISTENT => true,
+        \tebe\pdo\PDO::ATTR_CASE => \tebe\pdo\PDO::CASE_LOWER,
     ]);
 
     $sql = "DROP TABLE IF EXISTS fruits";

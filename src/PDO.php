@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tebe;
+namespace tebe\pdo;
 
 /**
  * Represents a connection between PHP and a database server.

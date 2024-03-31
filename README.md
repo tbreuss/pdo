@@ -23,7 +23,7 @@ Added or changed functionality in `tebe\pdo` over the native PDO includes:
 Create a PDO instance representing a connection to a database.
 
 ```php
-use tebe\PDO;
+use tebe\pdo\PDO;
 $db = new PDO('sqlite:database.sqlite');
 ```
 
@@ -100,11 +100,11 @@ This package requires PHP 8.1 or later; it has been tested on latest Linux, macO
 
 ## Documentation
 
-### tebe\PDO
+### tebe\pdo\PDO
 
-The class `tebe\PDO` is a wrapper for the native `PDO` class and implements all methods of this class. 
+The class `tebe\pdo\PDO` is a wrapper for the native `PDO` class and implements all methods of this class. 
 
-The main differences are that some methods return `tebe\PDOStatement` instances and the `quote` method can also handle arrays.
+The main differences are that some methods return `tebe\pdo\PDOStatement` instances and the `quote` method can also handle arrays.
 
 In addition, the class contains a new method `run`, which executes a query with bound values and returns the resulting statement instance.
 
@@ -120,7 +120,7 @@ public PDO::getWrappedPdo(): \PDO
 
 Prepares a statement for execution and returns a statement object.
 
-This differs from `PDO::prepare` in that it will return a `tebe\PDOStatement` object.
+This differs from `PDO::prepare` in that it will return a `tebe\pdo\PDOStatement` object.
 
 ```php
 public PDO::prepare(string $query, array $options = []): PDOStatement|false
@@ -132,7 +132,7 @@ See [php.net](https://php.net/pdo.prepare)
 
 Prepares and executes an SQL statement without placeholders.
 
-This differs from `PDO::query` in that it will return a `tebe\PDOStatement` object.
+This differs from `PDO::query` in that it will return a `tebe\pdo\PDOStatement` object.
 
 ```php
 public PDO::query(string $query, mixed ...$fetchModeArgs): PDOStatement|false
@@ -154,7 +154,7 @@ See [php.net](https://php.net/pdo.quote)
 
 #### run
 
-Runs a query with bound values and returns the resulting `tebe\PDOStatement`. 
+Runs a query with bound values and returns the resulting `tebe\pdo\PDOStatement`. 
 
 Array values will be processed by the parser instance and placeholders are replaced.
 
@@ -164,7 +164,7 @@ public PDO::run(string $sql, ?array $args = null): PDOStatement|false
 
 ---
 
-The remaining `tebe\PDO` methods are simple wrapper methods of the underlying `PDO` class.
+The remaining `tebe\pdo\PDO` methods are simple wrapper methods of the underlying `PDO` class.
 For more information, see [php.net](https://php.net/pdo).
 
 - [beginTransaction](https://php.net/pdo.beginTransaction)
@@ -180,9 +180,9 @@ For more information, see [php.net](https://php.net/pdo).
 - [rollBack](https://php.net/pdo.rollBack)
 - [setAttribute](https://php.net/pdo.setAttribute)
 
-### tebe\PDOStatement
+### tebe\pdo\PDOStatement
 
-The class `tebe\PDOStatement` is a wrapper for the native `PDOStatement` class and implements all methods of this class. 
+The class `tebe\pdo\PDOStatement` is a wrapper for the native `PDOStatement` class and implements all methods of this class. 
 
 The main difference is that the `execute` method returns a statement instance. This was done to allow method chaining aka fluent interface.
 
@@ -190,7 +190,7 @@ Besides that it contains several new `fetch*()` and `fetchAll*()` methodes for c
 
 #### __construct
 
-Creates a `tebe\PDOStatement` instance representing a query statement and wraps the original `PDOStatement`.
+Creates a `tebe\pdo\PDOStatement` instance representing a query statement and wraps the original `PDOStatement`.
 
 ```php
 public PDOStatement::__construct(\PDOStatement $stmt)
@@ -200,7 +200,7 @@ public PDOStatement::__construct(\PDOStatement $stmt)
 
 Executes a prepared statement
 
-This differs from `PDOStatement::execute` in that it will return a `tebe\PDOStatement` object.
+This differs from `PDOStatement::execute` in that it will return a `tebe\pdo\PDOStatement` object.
 
 ```php
 public PDOStatement::execute(?array $params = null): PDOStatement|false
@@ -349,7 +349,7 @@ public PDOStatement::fetchAllUnique(int $style = 0): array
 
 ---
 
-The remaining `tebe\PDOStatement` methods are simple wrapper methods of the underlying `PDOStatement` class.
+The remaining `tebe\pdo\PDOStatement` methods are simple wrapper methods of the underlying `PDOStatement` class.
 For more information, see [php.net](https://php.net/pdostatement).
 
 - [bindColumn](https://php.net/pdostatement.bindcolumn)
@@ -372,13 +372,13 @@ For more information, see [php.net](https://php.net/pdostatement).
 - [setAttribute](https://php.net/pdostatement.setAttribute)
 - [setFetchMode](https://php.net/pdostatement.setFetchMode)
 
-### tebe\PDOParser
+### tebe\pdo\PDOParser
 
-Class `tebe\PDOParser` offers parsing and rebuilding functions for all drivers.
+Class `tebe\pdo\PDOParser` offers parsing and rebuilding functions for all drivers.
 
 #### __construct
 
-Creates a `tebe\PDOParser` instance.
+Creates a `tebe\pdo\PDOParser` instance.
 
 ```php
 public PDOParser::__construct(string $driver)

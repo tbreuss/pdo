@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tebe;
+namespace tebe\pdo;
 
 use PDOException;
 
