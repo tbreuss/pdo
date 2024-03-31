@@ -118,7 +118,7 @@ function test_pdo_prepare(): void
     $db = init_db();
     $sql = "SELECT * FROM fruits WHERE id > ?";
     $stmt = $db->prepare($sql);
-    assert_instanceof($stmt, \tebe\PDOStatement::class, 'Prepare returns PDOStatement');
+    assert_instanceof($stmt, \tebe\pdo\PDOStatement::class, 'Prepare returns PDOStatement');
     assert_equal($stmt->queryString, $sql, 'Query string of PDOStatement');
 }
 

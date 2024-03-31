@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace tebe\pdo\tests;
 
-use tebe\PDOParser;
+use tebe\pdo\PDOParser;
 
 function test_pdo_parser_rebuild_with_positional_placeholders(): void
 {

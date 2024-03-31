@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tebe;
+namespace tebe\pdo;
 
 /**
  * Represents a prepared statement and, after the statement is executed, an associated result set.
