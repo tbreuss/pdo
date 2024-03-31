@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "tebe\\": "src/"
+            "tebe\\pdo\\": "src/"
         }
     },    
     "scripts": {
