@@ -97,7 +97,6 @@ class PDO
     public const PARAM_STR_NATL = \PDO::PARAM_STR_NATL;
 
     protected \PDO $pdo;
-    protected PDOParser $parser;
 
     /**
      * Creates a PDO instance representing a connection to a database
@@ -113,7 +112,6 @@ class PDO
             $options
         );
         $this->pdo = new \PDO($dsn, $username, $password, $options);
-        $this->parser = new PDOParser($this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
     }
 
     /**
@@ -229,13 +227,17 @@ class PDO
         }
 
         if ($isMultiArray) {
-            $parser = clone $this->parser;
-            [$sql, $args] = $parser->rebuild($sql, $args);
+            [$sql, $args] = $this->createParser()->rebuild($sql, $args);
         }
 
         $stmt = $this->pdo->prepare($sql);
         $status = $stmt->execute($args);
 
         return $status ? new PDOStatement($stmt) : false;
+    }
+
+    private function createParser(): PDOParser
+    {
+        return new PDOParser($this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
     }
 }
