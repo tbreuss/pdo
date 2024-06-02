@@ -6,7 +6,7 @@ namespace tebe\pdo;
 
 /**
  * Represents a prepared statement and, after the statement is executed, an associated result set.
- * 
+ *
  * @method bool bindValue(string|int $param, mixed $value, int $type = PDO::PARAM_STR) Binds a value to a parameter
  * @method bool closeCursor() Closes the cursor, enabling the statement to be executed again
  * @method int columnCount() Returns the number of columns in the result set
@@ -98,7 +98,7 @@ class PDOStatement implements \IteratorAggregate
 
     /**
      * Executes a prepared statement
-     * 
+     *
      * This differs from `PDOStatement::execute` in that it will return a PDOStatement object.
      */
     public function execute(?array $params = null): PDOStatement|false
@@ -223,7 +223,7 @@ class PDOStatement implements \IteratorAggregate
     }
 
     /**
-     * Fetches all rows from the result set as an array of objects of the requested class, 
+     * Fetches all rows from the result set as an array of objects of the requested class,
      * mapping the columns to named properties in the class
      */
     public function fetchAllObject(string $class = 'stdClass', ?array $constructorArgs = null, int $style = 0): array
