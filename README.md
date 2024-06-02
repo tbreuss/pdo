@@ -96,7 +96,7 @@ include '{path/to/tebe/pdo}/src/PDOParser.php';
 
 ## Dependencies
 
-This package requires PHP 8.1 or later; it has been tested on latest Linux, macOS and Windows on PHP 8.1-8.3. We recommend using the latest available version of PHP as a matter of principle. `tebe\pdo` doesn't depend on other external packages.
+This package requires PHP 8.1 or later; it has been tested on latest Linux, macOS and Windows on PHP 8.1-8.4. We recommend using the latest available version of PHP as a matter of principle. `tebe\pdo` doesn't depend on other external packages.
 
 ## Documentation
 
