@@ -10,7 +10,7 @@ use PDOException;
  * Parsing/rebuilding functionality for all drivers.
  *
  * Note that this does not validate the syntax; it only replaces/rebuilds placeholders in the query.
- * 
+ *
  * @link https://github.com/auraphp/Aura.Sql Copied from aura/sql and simplified according to our needs
  */
 class PDOParser
@@ -76,7 +76,7 @@ class PDOParser
             "/(?<!:)(:[a-zA-Z_][a-zA-Z0-9_]*)|(\?)/um",
             $part,
             -1,
-            PREG_SPLIT_DELIM_CAPTURE
+            PREG_SPLIT_DELIM_CAPTURE,
         );
 
         // check subparts to expand placeholders for bound arrays
@@ -172,7 +172,7 @@ class PDOParser
             "/($split)/um",
             $statement,
             -1,
-            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
         );
     }
 
@@ -211,7 +211,7 @@ class PDOParser
                 "'(?:[^'\\\\]|\\\\'?)*'",
                 // double-quoted string
                 '"(?:[^"\\\\]|\\\\"?)*"',
-            ]
+            ],
         };
     }
 
@@ -221,7 +221,7 @@ class PDOParser
             'mysql' => '/^(\'|\"|\`)/um',
             'pgsql' => '/^(\'|\"|\$|\:[^a-zA-Z_])/um',
             'sqlite' => '/^(\'|"|`|\:[^a-zA-Z_])/um',
-            default => '/^(\'|\"|\:[^a-zA-Z_])/um'
+            default => '/^(\'|\"|\:[^a-zA-Z_])/um',
         };
     }
 }

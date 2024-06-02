@@ -6,7 +6,7 @@ namespace tebe\pdo;
 
 /**
  * Represents a connection between PHP and a database server.
- * 
+ *
  * @method bool beginTransaction() Initiates a transaction
  * @method bool commit() Commits a transaction
  * @method string|null errorCode() Fetch the SQLSTATE associated with the last operation on the database handle
@@ -101,7 +101,7 @@ class PDO
     /**
      * Creates a PDO instance representing a connection to a database
      */
-    public function __construct(string $dsn, ?string $username = NULL, ?string $password = NULL, array $options = [])
+    public function __construct(string $dsn, ?string $username = null, ?string $password = null, array $options = [])
     {
         $options = array_replace(
             [
@@ -109,7 +109,7 @@ class PDO
                 PDO::ATTR_EMULATE_PREPARES => false,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ],
-            $options
+            $options,
         );
         $this->pdo = new \PDO($dsn, $username, $password, $options);
     }
@@ -140,7 +140,6 @@ class PDO
     }
 
     /**
-     * 
      * Calls the static method of the underlying PDO instance
      */
     public static function __callStatic(string $name, array $arguments): mixed
@@ -166,7 +165,7 @@ class PDO
 
     /**
      * Prepares a statement for execution and returns a statement object
-     * 
+     *
      * This differs from `PDO::prepare` in that it will return a `tebe\PDOStatement` object.
      */
     public function prepare(string $query, array $options = []): PDOStatement|false
@@ -177,7 +176,7 @@ class PDO
 
     /**
      * Prepares and executes an SQL statement without placeholders and returns a statement object
-     * 
+     *
      * This differs from `PDO::query` in that it will return a `tebe\PDOStatement` object.
      */
     public function query(string $query, mixed ...$fetchModeArgs): PDOStatement|false
@@ -188,8 +187,8 @@ class PDO
 
     /**
      * Quotes a value for use in a query
-     * 
-     * This differs from `PDO::quote()` in that it will convert an array into 
+     *
+     * This differs from `PDO::quote()` in that it will convert an array into
      * a string of comma-separated quoted values.
      */
     public function quote(array|string|int|float|null $value, int $type = self::PARAM_STR): string|false
@@ -208,7 +207,7 @@ class PDO
     }
 
     /**
-     * Runs a query with bound values and returns the resulting PDOStatement; 
+     * Runs a query with bound values and returns the resulting PDOStatement;
      * array values will be processed by the parser instance and placeholders are replaced.
      */
     public function run(string $sql, ?array $args = null): PDOStatement|false
