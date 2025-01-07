@@ -26,7 +26,7 @@
         }
     },    
     "scripts": {
-        "check-coding-standards": "php-cs-fixer fix src --rules=@PER-CS2.0 --dry-run --diff",
+        "check-coding-standards": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix src --rules=@PER-CS2.0 --dry-run --diff",
         "fix-coding-standards": "php-cs-fixer fix src --rules=@PER-CS2.0 --diff",
         "test": [
             "@check-coding-standards",
@@ -34,6 +34,6 @@
         ]
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.58"
+        "friendsofphp/php-cs-fixer": "^3.66"
     }
 }
