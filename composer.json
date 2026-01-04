@@ -17,14 +17,14 @@
     "homepage": "https://github.com/tebe/pdo",
     "license": "MIT",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
             "tebe\\pdo\\": "src/"
         }
-    },    
+    },
     "scripts": {
         "test": [
             "@php tests/functional.php"
